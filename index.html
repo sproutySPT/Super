@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
-<title>정새싹연구소</title>
+<title>SPROUTY · 쓰레기 연구소</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Noto+Serif+KR:wght@500;600;700&display=swap" rel="stylesheet">
@@ -24,6 +24,7 @@
   --radius-sm:12px;
   --g-common:#4FB9E6;
   --g-rare:#33BE72;
+  --g-superrare:#5E78FF;
   --g-epic:#A265EB;
   --g-myth:#F0424F;
   --g-legend:#E3AF33;
@@ -116,7 +117,7 @@ img{max-width:100%;display:block;}
   display:flex;flex-direction:column;gap:16px;
 }
 .record-visual{
-  width:100%;aspect-ratio:1/1;max-height:220px;border-radius:var(--radius-md);
+  width:100%;aspect-ratio:1/1;max-height:220px;border-radius:0;
   background:linear-gradient(160deg,var(--surface2),#EAF6ED);
   display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;
   border:1px solid var(--line);
@@ -140,9 +141,9 @@ img{max-width:100%;display:block;}
 .pull-button-text{font-size:clamp(22px,6vw,30px);font-weight:900;color:var(--accent-ink);letter-spacing:2px;}
 .pull-hint{font-size:13px;color:var(--muted);font-weight:600;}
 
-.lab-footer{display:flex;gap:12px;padding:10px 18px 24px;max-width:920px;margin:0 auto;flex-wrap:wrap;}
+.lab-footer{display:grid;grid-template-columns:1.2fr 1.2fr 1fr;gap:12px;padding:10px 18px 24px;max-width:920px;margin:0 auto;flex-wrap:wrap;}
 .wide-btn{
-  flex:1;min-width:150px;padding:16px;border-radius:var(--radius-md);
+  min-width:0;padding:16px;border-radius:var(--radius-md);
   background:var(--ink);color:#fff;font-weight:800;font-size:15px;
   box-shadow:var(--shadow-soft);display:flex;align-items:center;justify-content:center;gap:8px;
 }
@@ -159,10 +160,39 @@ img{max-width:100%;display:block;}
 }
 @media (min-width:680px){.pack-grid{grid-template-columns:repeat(3,1fr);}}
 .pack-card{
-  background:var(--surface);border-radius:var(--radius-lg);padding:20px;
+  position:relative;overflow:hidden;
+  background:
+    radial-gradient(circle at 88% 8%,rgba(255,197,61,.18),transparent 28%),
+    linear-gradient(145deg,#ffffff,#F2F8F4);
+  border-radius:var(--radius-lg);padding:20px;
   border:1px solid var(--line);box-shadow:var(--shadow-soft);display:flex;flex-direction:column;gap:12px;
 }
-.pack-name{font-size:17px;font-weight:900;}
+.pack-card::before{
+  content:"";position:absolute;width:150px;height:150px;right:-70px;top:-72px;border-radius:50%;
+  border:1px solid rgba(30,43,36,.08);box-shadow:0 0 0 18px rgba(30,43,36,.025),0 0 0 38px rgba(30,43,36,.018);
+  pointer-events:none;
+}
+.pack-card::after{
+  content:"";position:absolute;inset:10px;border-radius:20px;border:1px solid rgba(255,255,255,.7);pointer-events:none;
+}
+.pack-emblem{
+  width:78px;height:78px;border-radius:24px;position:relative;display:flex;align-items:center;justify-content:center;
+  margin-bottom:2px;color:#fff;font-size:25px;font-weight:900;letter-spacing:1px;
+  box-shadow:0 10px 24px rgba(30,60,45,.14),inset 0 0 0 2px rgba(255,255,255,.28);
+  border:1px solid rgba(255,255,255,.55);
+  overflow:hidden;isolation:isolate;
+}
+.pack-emblem::before{
+  content:"";position:absolute;inset:9px;border:2px solid rgba(255,255,255,.35);border-radius:50%;
+}
+.pack-emblem::after{
+  content:"✦";position:absolute;font-size:42px;line-height:1;opacity:.18;transform:rotate(22deg);
+}
+.pack-emblem span{position:relative;z-index:2;text-shadow:0 2px 8px rgba(0,0,0,.22);}
+.pack-emblem-normal{background:linear-gradient(145deg,#6BC4E7,#328CAA);}
+.pack-emblem-cool{background:linear-gradient(145deg,#7F8FFF,#4C4FD0);}
+.pack-emblem-awesome{background:linear-gradient(145deg,#E38DFF,#8C4CC5);}
+.pack-name{font-size:17px;font-weight:900;position:relative;z-index:1;}
 .pack-desc{font-size:13px;color:var(--muted);}
 .pack-price{font-weight:800;font-size:15px;display:flex;align-items:center;gap:6px;}
 .prob-list{display:flex;flex-direction:column;gap:5px;background:var(--surface2);border-radius:var(--radius-sm);padding:10px 12px;}
@@ -176,11 +206,11 @@ img{max-width:100%;display:block;}
 .pack-btn:active{transform:scale(0.97);}
 
 /* Visual (image/emoji) helper */
-.visual-wrap{position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center;}
-.visual-emoji{font-size:64%;display:flex;align-items:center;justify-content:center;width:100%;height:100%;line-height:1;}
+.visual-wrap{position:relative;width:100%;height:100%;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;}
+.visual-emoji{font-size:64%;display:flex;align-items:center;justify-content:center;width:100%;height:100%;line-height:1;border-radius:0;}
 .visual-wrap.small .visual-emoji{font-size:46px;}
-.visual-img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;}
-.visual-wrap.silhouette{background:#2A332D;border-radius:16px;color:#7C8C82;font-size:40px;font-weight:900;}
+.visual-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:0;}
+.visual-wrap.silhouette{background:#2A332D;border-radius:0;color:#7C8C82;font-size:40px;font-weight:900;}
 
 /* Opening screen */
 #screen-opening{background:#12181B;color:#fff;min-height:100vh;}
@@ -189,7 +219,7 @@ img{max-width:100%;display:block;}
 .pity-badge{font-size:11.5px;color:#C9D3CD;background:rgba(255,255,255,0.08);padding:6px 12px;border-radius:999px;font-weight:700;text-align:center;}
 .skip-btn{font-size:13px;color:#FFC53D;font-weight:800;background:rgba(255,197,61,0.12);padding:8px 14px;border-radius:999px;}
 .opening-stage{position:relative;height:calc(100vh - 90px);display:flex;align-items:center;justify-content:center;overflow:hidden;}
-#pouch-canvas{width:100%;height:100%;display:block;touch-action:none;}
+#pouch-canvas{width:100%;height:100%;display:block;touch-action:none;cursor:pointer;}
 .pouch-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
 .fallback-envelope{position:relative;width:min(60vw,260px);height:min(78vw,340px);--p:0;}
 .fallback-body{position:absolute;inset:0;border-radius:18px;background:linear-gradient(160deg,#3a4a3f,#1c2620);box-shadow:0 20px 40px rgba(0,0,0,0.45);}
@@ -216,70 +246,8 @@ img{max-width:100%;display:block;}
   content:"";position:absolute;top:-8px;left:50%;transform:translateX(-50%) rotate(-3deg);
   width:22px;height:14px;background:rgba(255,255,255,0.55);border-radius:2px;
 }
-.reveal-overlay{
-  position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;
-  background:rgba(10,14,12,0.55);opacity:0;pointer-events:none;transition:opacity .3s ease;z-index:10;padding:20px;
-}
-.reveal-overlay.show{opacity:1;pointer-events:auto;}
-.reveal-card{
-  width:min(74vw,300px);background:linear-gradient(165deg,#232D27,#161C19);border-radius:26px;
-  padding:22px;display:flex;flex-direction:column;align-items:center;gap:10px;
-  border:2px solid rgba(255,255,255,0.08);box-shadow:0 20px 60px rgba(0,0,0,0.55);
-  transform:scale(0.4);opacity:0;animation:cardIn .6s cubic-bezier(.2,.9,.25,1.2) forwards;
-  position:relative;overflow:hidden;z-index:2;
-}
-@keyframes cardIn{to{transform:scale(1);opacity:1;}}
-/* Grade-tinted glow ring around the reveal card (also fixes low-rarity cards feeling flat) */
-.reveal-card.glow-common{box-shadow:0 20px 60px rgba(0,0,0,0.55),0 0 0 1px var(--g-common),0 0 22px 2px rgba(79,185,230,0.35);}
-.reveal-card.glow-rare{box-shadow:0 20px 60px rgba(0,0,0,0.55),0 0 0 1px var(--g-rare),0 0 26px 3px rgba(51,190,114,0.4);}
-.reveal-card.glow-epic{box-shadow:0 20px 60px rgba(0,0,0,0.55),0 0 0 1.5px var(--g-epic),0 0 34px 6px rgba(162,101,235,0.55);animation:cardIn .6s cubic-bezier(.2,.9,.25,1.2) forwards,glowPulse 1.6s ease-in-out .6s infinite;}
-.reveal-card.glow-myth{box-shadow:0 20px 60px rgba(0,0,0,0.55),0 0 0 1.5px var(--g-myth),0 0 40px 8px rgba(240,66,79,0.6);animation:cardIn .6s cubic-bezier(.2,.9,.25,1.2) forwards,glowPulse 1.3s ease-in-out .6s infinite;}
-.reveal-card.glow-legend{box-shadow:0 20px 60px rgba(0,0,0,0.55),0 0 0 1.5px var(--g-legend),0 0 48px 10px rgba(227,175,51,0.65);animation:cardIn .6s cubic-bezier(.2,.9,.25,1.2) forwards,glowPulse 1.1s ease-in-out .6s infinite;}
-.reveal-card.glow-secret{box-shadow:0 20px 60px rgba(0,0,0,0.55),0 0 56px 14px rgba(194,107,255,0.7);animation:cardIn .6s cubic-bezier(.2,.9,.25,1.2) forwards,glowPulse .9s ease-in-out .6s infinite,rainbowGlow 2.4s linear .6s infinite;}
-@keyframes glowPulse{0%,100%{filter:brightness(1);}50%{filter:brightness(1.2);}}
-@keyframes rainbowGlow{
-  0%{box-shadow:0 20px 60px rgba(0,0,0,0.55),0 0 56px 14px rgba(255,94,94,0.6);}
-  16%{box-shadow:0 20px 60px rgba(0,0,0,0.55),0 0 56px 14px rgba(255,184,77,0.6);}
-  33%{box-shadow:0 20px 60px rgba(0,0,0,0.55),0 0 56px 14px rgba(255,249,107,0.6);}
-  50%{box-shadow:0 20px 60px rgba(0,0,0,0.55),0 0 56px 14px rgba(107,255,160,0.6);}
-  66%{box-shadow:0 20px 60px rgba(0,0,0,0.55),0 0 56px 14px rgba(107,211,255,0.6);}
-  83%{box-shadow:0 20px 60px rgba(0,0,0,0.55),0 0 56px 14px rgba(194,107,255,0.6);}
-  100%{box-shadow:0 20px 60px rgba(0,0,0,0.55),0 0 56px 14px rgba(255,94,94,0.6);}
-}
-/* Diagonal holographic shine sweep — plays once on epic+ reveals */
-.card-shine{position:absolute;inset:0;pointer-events:none;border-radius:26px;z-index:4;overflow:hidden;}
-.card-shine::after{content:"";position:absolute;top:-50%;left:-70%;width:55%;height:220%;
-  background:linear-gradient(75deg,transparent,rgba(255,255,255,0.7) 45%,rgba(255,255,255,0.95) 50%,rgba(255,255,255,0.7) 55%,transparent);
-  transform:rotate(8deg) translateX(-40%);opacity:0;}
-.card-shine.sweep::after{animation:shineSweep 1.1s ease-out .4s 1;}
-@keyframes shineSweep{
-  0%{transform:rotate(8deg) translateX(-160%);opacity:0;}
-  10%{opacity:1;}
-  55%{opacity:1;}
-  100%{transform:rotate(8deg) translateX(220%);opacity:0;}
-}
-.reveal-visual{width:100%;aspect-ratio:1/1;border-radius:18px;background:rgba(255,255,255,0.04);overflow:hidden;position:relative;}
-.reveal-grade{font-size:12px;font-weight:900;letter-spacing:2px;padding:4px 14px;border-radius:999px;}
-/* Fix: name text used to inherit the dark body ink color, making it nearly invisible on the dark card background */
-.reveal-name{font-size:19px;font-weight:900;text-align:center;color:#F5FFF7;}
-.reveal-special{font-size:12.5px;color:#FFD37A;font-weight:700;text-align:center;}
-.reveal-progress{font-size:12px;color:#C9D3CD;font-weight:700;position:relative;z-index:2;}
-.reveal-next-btn{background:var(--accent);color:var(--accent-ink);font-weight:900;padding:14px 30px;border-radius:999px;font-size:15px;box-shadow:0 10px 24px rgba(255,197,61,0.35);position:relative;z-index:2;}
-.reveal-next-btn:active{transform:scale(0.96);}
-/* Rotating light-ray burst behind the card, colored per grade */
-.reveal-rays{
-  position:absolute;top:50%;left:50%;width:150vmax;height:150vmax;
-  transform:translate(-50%,-50%) rotate(0deg);
-  background:repeating-conic-gradient(from 0deg, var(--ray-color,#ffffff) 0deg 3deg, transparent 3deg 15deg);
-  opacity:0;pointer-events:none;mix-blend-mode:screen;z-index:0;
-}
-.reveal-rays.spin{animation:raySpin 7s linear infinite,rayIn .5s ease forwards;}
-@keyframes raySpin{to{transform:translate(-50%,-50%) rotate(360deg);}}
-@keyframes rayIn{from{opacity:0;}to{opacity:var(--ray-opacity,0.3);}}
-/* Full-screen flash pulse the instant a card is revealed */
-.reveal-flash{position:absolute;inset:0;background:radial-gradient(circle at 50% 42%,rgba(255,255,255,0.95),rgba(255,255,255,0) 60%);opacity:0;pointer-events:none;z-index:5;mix-blend-mode:screen;}
-.reveal-flash.pulse{animation:flashPulse .5s ease-out;}
-@keyframes flashPulse{0%{opacity:0;}14%{opacity:var(--flash-opacity,0.7);}100%{opacity:0;}}
+/* Reveal information lives on the 3D card now; this old 2D label is intentionally hidden. */
+#pouch-name-tag{display:none !important;}
 .particle{position:absolute;border-radius:50%;pointer-events:none;z-index:3;}
 .shake{animation:shakeAnim .5s ease;}
 @keyframes shakeAnim{
@@ -298,6 +266,14 @@ img{max-width:100%;display:block;}
   80%{filter:hue-rotate(40deg) saturate(1.8);transform:translateX(-1px);}
   100%{filter:hue-rotate(0deg) saturate(1);transform:none;}
 }
+.reveal-impact-flash{
+  position:absolute;inset:0;pointer-events:none;z-index:20;opacity:0;
+  background:radial-gradient(circle at 50% 45%,rgba(255,255,255,.96),rgba(255,255,255,0) 62%);
+  mix-blend-mode:screen;
+}
+.reveal-impact-flash.show{animation:revealImpactFlash .42s ease-out;}
+@keyframes revealImpactFlash{0%{opacity:0;transform:scale(.88)}10%{opacity:.9;transform:scale(1.04)}100%{opacity:0;transform:scale(1.12)}}
+.reveal-impact-flash.strong{background:radial-gradient(circle at 50% 45%,rgba(255,244,180,.98),rgba(255,215,80,0) 68%)}
 
 /* Result screen */
 .result-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:14px;padding:10px 18px 20px;max-width:920px;margin:0 auto;}
@@ -305,12 +281,13 @@ img{max-width:100%;display:block;}
   background:var(--surface);border-radius:var(--radius-md);padding:10px;border:2px solid var(--line);
   display:flex;flex-direction:column;align-items:center;gap:6px;box-shadow:var(--shadow-soft);
 }
-.result-visual{width:100%;aspect-ratio:1/1;border-radius:12px;background:var(--surface2);overflow:hidden;position:relative;}
+.result-visual{width:100%;aspect-ratio:1/1;border-radius:0;background:var(--surface2);overflow:hidden;position:relative;}
 .result-name{font-size:12px;font-weight:800;text-align:center;line-height:1.25;}
 
 /* Grade colors */
 .grade-common{color:var(--g-common);}
 .grade-rare{color:var(--g-rare);}
+.grade-superrare{color:var(--g-superrare);}
 .grade-epic{color:var(--g-epic);}
 .grade-myth{color:var(--g-myth);}
 .grade-legend{color:var(--g-legend);}
@@ -318,12 +295,14 @@ img{max-width:100%;display:block;}
 @keyframes rainbowShift{to{background-position:300% 0;}}
 .bd-common{border-color:var(--g-common) !important;}
 .bd-rare{border-color:var(--g-rare) !important;}
+.bd-superrare{border-color:var(--g-superrare) !important;}
 .bd-epic{border-color:var(--g-epic) !important;}
 .bd-myth{border-color:var(--g-myth) !important;}
 .bd-legend{border-color:var(--g-legend) !important;}
 .bd-secret{border-image:linear-gradient(90deg,#ff5e5e,#ffb84d,#fff96b,#6bffa0,#6bd3ff,#c26bff) 1 !important;}
 .bg-common{background:var(--g-common) !important;}
 .bg-rare{background:var(--g-rare) !important;}
+.bg-superrare{background:var(--g-superrare) !important;}
 .bg-epic{background:var(--g-epic) !important;}
 .bg-myth{background:var(--g-myth) !important;}
 .bg-legend{background:var(--g-legend) !important;}
@@ -343,20 +322,20 @@ img{max-width:100%;display:block;}
 .idle-stat .l{font-size:10px;color:var(--muted);margin-top:4px;font-weight:700;}
 .idle-panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:18px;box-shadow:var(--shadow-soft);margin-top:14px;}
 .idle-panel h3{font-size:16px;font-weight:900;margin-bottom:12px;}
-.idle-slots{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
-.idle-slot{background:var(--surface2);border:1px dashed #CFE0D3;border-radius:var(--radius-md);padding:12px;min-width:0;}
+.idle-slots{display:grid;grid-template-columns:1fr;gap:10px;max-width:520px;margin:0 auto;}
+.idle-slot{background:var(--surface2);border:1px dashed #CFE0D3;border-radius:0;padding:12px;min-width:0;}
 .idle-slot-label{font-size:11px;font-weight:800;color:var(--muted);margin-bottom:8px;}
 .idle-slot select{width:100%;padding:11px 10px;border-radius:12px;border:1px solid var(--line);background:#fff;color:var(--ink);font-weight:800;font-family:inherit;font-size:12px;}
 .idle-slot-picker{width:100%;display:flex;align-items:center;gap:10px;text-align:left;padding:11px 10px;border-radius:14px;border:1px solid var(--line);background:#fff;box-shadow:var(--shadow-soft);}
 .idle-slot-picker:active{transform:scale(.985);}
-.slot-picker-icon{width:38px;height:38px;flex-shrink:0;border-radius:11px;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:23px;}
+.slot-picker-icon{width:56px;height:56px;flex-shrink:0;border-radius:0;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:23px;}
 .slot-picker-main{min-width:0;flex:1;display:flex;flex-direction:column;gap:3px;}
 .slot-picker-main b{font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .slot-picker-main small{font-size:10px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .slot-picker-arrow{font-size:24px;color:var(--muted);line-height:1;}
 .idle-slot-rate{margin-top:8px;font-size:11px;color:#4FB9E6;font-weight:900;}
 .idle-upgrades{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.idle-upgrade-card{background:var(--surface2);border:1px solid var(--line);border-radius:var(--radius-md);padding:14px;}
+.idle-upgrade-card{background:var(--surface2);border:1px solid var(--line);border-radius:0;padding:14px;}
 .idle-upgrade-title{font-size:13px;font-weight:900;}
 .idle-upgrade-desc{font-size:11px;color:var(--muted);margin:5px 0 10px;line-height:1.5;}
 .idle-upgrade-btn{width:100%;padding:11px;border-radius:12px;background:var(--ink);color:#fff;font-weight:900;font-size:12px;}
@@ -406,7 +385,7 @@ img{max-width:100%;display:block;}
   padding:8px;gap:4px;overflow:hidden;
 }
 .dex-cell.undiscovered{opacity:0.55;}
-.dex-cell .cell-visual{width:60%;aspect-ratio:1/1;position:relative;}
+.dex-cell .cell-visual{width:60%;aspect-ratio:1/1;position:relative;border-radius:0;overflow:hidden;}
 .dex-cell .cell-name{font-family:"Noto Sans KR",sans-serif;font-size:10.5px;font-weight:700;text-align:center;color:#E8D8AE;line-height:1.2;}
 .dex-cell .cell-count{
   position:absolute;top:4px;right:6px;font-family:"Noto Sans KR",sans-serif;font-size:10px;font-weight:800;
@@ -450,7 +429,7 @@ img{max-width:100%;display:block;}
 .switch input:checked + .slider{background:var(--accent);}
 .switch input:checked + .slider:before{transform:translateX(20px);}
 
-.detail-modal .d-visual{width:100%;aspect-ratio:1/1;max-height:220px;border-radius:var(--radius-md);background:var(--surface2);position:relative;overflow:hidden;margin-bottom:14px;}
+.detail-modal .d-visual{width:100%;aspect-ratio:1/1;max-height:220px;border-radius:0;background:var(--surface2);position:relative;overflow:hidden;margin-bottom:14px;}
 .detail-modal .d-grade{display:inline-block;font-size:12px;font-weight:900;letter-spacing:1.5px;padding:4px 12px;border-radius:999px;background:var(--surface2);margin-bottom:6px;}
 .detail-modal .d-name{font-size:20px;font-weight:900;margin-bottom:10px;}
 .detail-row{display:flex;justify-content:space-between;font-size:13.5px;font-weight:700;padding:8px 0;border-bottom:1px dashed var(--line);}
@@ -462,7 +441,8 @@ img{max-width:100%;display:block;}
 .history-row .h-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
 .history-row .h-main{flex:1;font-weight:800;}
 .history-row .h-sub{color:var(--muted);font-size:11px;font-weight:600;}
-.history-empty,.dex-empty{text-align:center;color:var(--muted);padding:30px 10px;font-weight:700;font-family:"Noto Sans KR",sans-serif;}
+.history-row .h-pity-tag{display:inline-block;font-size:10px;font-weight:800;color:#E0A800;background:#FFF3CC;border-radius:6px;padding:1px 6px;margin-left:2px;vertical-align:1px;}
+.history-empty{text-align:center;color:var(--muted);padding:30px 10px;font-weight:700;font-family:"Noto Sans KR",sans-serif;}
 
 #toast-container{position:fixed;top:calc(env(safe-area-inset-top) + 14px);left:50%;transform:translateX(-50%);z-index:999;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none;}
 .toast{background:#1E2B24;color:#fff;padding:11px 20px;border-radius:999px;font-size:13.5px;font-weight:700;box-shadow:var(--shadow-strong);opacity:0;transform:translateY(-8px);transition:.25s ease;}
@@ -486,11 +466,13 @@ img{max-width:100%;display:block;}
   border-radius:20px;
 }
 #splash-screen.show #splash-image{opacity:1;transform:scale(1);}
+#btn-upgrade-capacity,.idle-upgrade-card:has(#btn-upgrade-capacity){display:none !important;}
+@media(max-width:640px){.lab-footer{grid-template-columns:1fr 1fr;}.lab-footer .wide-btn:first-child{grid-column:1 / -1;}.idle-slots{max-width:none;}}
 </style>
 </head>
 <body>
 
-<div id="splash-screen"><img id="splash-image" alt="정새싹연구소"></div>
+<div id="splash-screen"><img id="splash-image" alt="쓰레기 연구소"></div>
 <div id="toast-container"></div>
 <div class="lab-bg-decor" id="lab-bg-decor"></div>
 
@@ -500,11 +482,11 @@ img{max-width:100%;display:block;}
   <section class="screen active" data-screen="main">
     <header class="lab-header">
       <div class="brand">
-        <span class="brand-title">정새싹연구소</span>
-        <span class="brand-sub">정새싹 수집 &amp; 연구</span>
+        <span class="brand-title">쓰레기 연구소</span>
+        <span class="brand-sub">SPROUTY · 쓰레기 수집 &amp; 연구</span>
       </div>
       <div style="display:flex;align-items:center;gap:8px;">
-        <div class="seed-counter"><div class="seed-balance"><span class="seed-icon">🌱</span><span id="seed-amount-main">0</span></div><div class="seed-income-pop" id="seed-income-main"></div></div>
+        <div class="seed-counter"><div class="seed-balance"><span class="seed-icon">🗑️</span><span id="seed-amount-main">0</span></div><div class="seed-income-pop" id="seed-income-main"></div></div>
         <button class="icon-btn" id="btn-settings-main" title="설정">⚙️</button>
       </div>
     </header>
@@ -526,34 +508,34 @@ img{max-width:100%;display:block;}
           </div>
           <div class="record-row">
             <span class="record-label">총 획득</span>
-            <span class="record-value"><span id="record-total">0</span>마리</span>
+            <span class="record-value"><span id="record-total">0</span>개</span>
           </div>
         </div>
       </div>
 
       <div class="pull-panel">
         <button class="pull-button" id="btn-open-packs"><span class="pull-button-text">뽑기</span></button>
-        <p class="pull-hint">눌러서 정새싹 팩을 선택하세요</p>
+        <p class="pull-hint">눌러서 쓰레기 팩을 선택하세요</p>
       </div>
     </main>
 
     <div class="idle-hero" style="margin:0 18px 12px;max-width:920px;margin-left:auto;margin-right:auto;">
       <div class="idle-hero-top">
         <div>
-          <div class="idle-title" style="font-size:16px;">🧪 연구소 자동 생산</div>
-          <div class="idle-sub">배치한 정새싹이 씨앗을 계속 벌어옵니다.</div>
+          <div class="idle-title" style="font-size:16px;">🧪 쓰레기 용광로 자동 생산</div>
+          <div class="idle-sub">배치한 단 하나의 쓰레기가 쓰레기 조각을 계속 벌어옵니다.</div>
         </div>
         <div class="idle-rate" id="main-idle-rate">+0 /초</div>
       </div>
       <div class="idle-stats">
-        <div class="idle-stat"><div class="n" id="main-lab-filled">0 / 3</div><div class="l">연구 슬롯</div></div>
+        <div class="idle-stat"><div class="n" id="main-lab-filled">0 / 1</div><div class="l">용광로</div></div>
         <div class="idle-stat"><div class="n" id="main-lab-boost">+0%</div><div class="l">연구 효율</div></div>
         <div class="idle-stat"><div class="n" id="main-offline-cap">8시간</div><div class="l">오프라인 적립</div></div>
       </div>
     </div>
     <footer class="lab-footer">
       <button class="wide-btn" id="btn-open-lab">🧪 연구소</button>
-      <button class="wide-btn secondary" id="btn-open-dex">📖 도감 열기</button>
+      <button class="wide-btn" id="btn-open-dex" style="background:#C9A227;color:#241A12;">📖 도감</button>
       <button class="wide-btn secondary" id="btn-open-history">🕘 획득 기록</button>
     </footer>
   </section>
@@ -562,8 +544,8 @@ img{max-width:100%;display:block;}
   <section class="screen" data-screen="packs">
     <header class="sub-header">
       <button class="back-btn" data-back="main">← 뒤로</button>
-      <h2>정새싹 팩 선택</h2>
-      <div class="seed-counter"><div class="seed-balance"><span class="seed-icon">🌱</span><span id="seed-amount-packs">0</span></div><div class="seed-income-pop" id="seed-income-packs"></div></div>
+      <h2>쓰레기 팩 선택</h2>
+      <div class="seed-counter"><div class="seed-balance"><span class="seed-icon">🗑️</span><span id="seed-amount-packs">0</span></div><div class="seed-income-pop" id="seed-income-packs"></div></div>
     </header>
     <div class="pack-grid" id="pack-grid"></div>
   </section>
@@ -572,42 +554,37 @@ img{max-width:100%;display:block;}
   <section class="screen idle-screen" data-screen="lab">
     <div class="sub-header">
       <button class="back-btn" data-back="main">← 뒤로</button>
-      <h2>🧪 정새싹 연구소</h2>
-      <div class="seed-counter"><div class="seed-balance"><span class="seed-icon">🌱</span><span id="seed-amount-lab">0</span></div><div class="seed-income-pop" id="seed-income-lab"></div></div>
+      <h2>🧪 쓰레기 연구소</h2>
+      <div class="seed-counter"><div class="seed-balance"><span class="seed-icon">🗑️</span><span id="seed-amount-lab">0</span></div><div class="seed-income-pop" id="seed-income-lab"></div></div>
     </div>
     <div class="idle-wrap">
       <div class="idle-hero">
         <div class="idle-hero-top">
           <div>
-            <div class="idle-title">정새싹이 씨앗을 벌어옵니다</div>
-            <div class="idle-sub">도감에서 발견한 정새싹을 연구 슬롯에 배치하면 자동으로 씨앗이 생산됩니다.</div>
+            <div class="idle-title">쓰레기가 쓰레기 조각을 벌어옵니다</div>
+            <div class="idle-sub">도감에서 발견한 쓰레기 단 하나를 쓰레기 용광로에 배치하면 자동으로 쓰레기 조각이 생산됩니다.</div>
           </div>
           <div class="idle-rate" id="lab-total-rate">+0 /초</div>
         </div>
         <div class="idle-stats">
-          <div class="idle-stat"><div class="n" id="lab-filled">0 / 3</div><div class="l">연구 슬롯</div></div>
+          <div class="idle-stat"><div class="n" id="lab-filled">0 / 1</div><div class="l">용광로</div></div>
           <div class="idle-stat"><div class="n" id="lab-boost">+0%</div><div class="l">연구 효율</div></div>
           <div class="idle-stat"><div class="n" id="lab-last-online">방금 접속</div><div class="l">마지막 계산</div></div>
         </div>
       </div>
 
       <div class="idle-panel">
-        <h3>🌱 연구 슬롯</h3>
+        <h3>🗑️ 쓰레기 용광로</h3>
         <div class="idle-slots" id="idle-slots"></div>
-        <div class="idle-collection-note">발견한 정새싹만 배치할 수 있습니다. 같은 정새싹은 한 슬롯에만 배치됩니다.</div>
+        <div class="idle-collection-note">발견한 쓰레기 중 단 하나만 배치할 수 있습니다. 슬롯 추가 업그레이드는 없습니다.</div>
       </div>
 
       <div class="idle-panel">
         <h3>⚙️ 연구소 업그레이드</h3>
         <div class="idle-upgrades">
           <div class="idle-upgrade-card">
-            <div class="idle-upgrade-title">연구 슬롯 확장</div>
-            <div class="idle-upgrade-desc" id="lab-capacity-desc">현재 슬롯 3개</div>
-            <button class="idle-upgrade-btn" id="btn-upgrade-capacity">🌱 1,000</button>
-          </div>
-          <div class="idle-upgrade-card">
             <div class="idle-upgrade-title">연구 효율</div>
-            <div class="idle-upgrade-desc" id="lab-boost-desc">배치된 정새싹 생산량 +0%</div>
+            <div class="idle-upgrade-desc" id="lab-boost-desc">용광로에 배치된 쓰레기 생산량 +0%</div>
             <button class="idle-upgrade-btn" id="btn-upgrade-boost">🌱 750</button>
           </div>
         </div>
@@ -615,7 +592,7 @@ img{max-width:100%;display:block;}
 
       <div class="idle-panel">
         <h3>💡 방치 보상</h3>
-        <div class="idle-sub">게임을 꺼도 최대 8시간 동안 씨앗이 쌓입니다. 다시 들어오면 자동으로 정산됩니다.</div>
+        <div class="idle-sub">게임을 꺼도 최대 8시간 동안 쓰레기 조각이 쌓입니다. 다시 들어오면 자동으로 정산됩니다.</div>
       </div>
     </div>
   </section>
@@ -629,6 +606,7 @@ img{max-width:100%;display:block;}
     </div>
     <div class="opening-stage" id="opening-stage">
       <canvas id="pouch-canvas"></canvas>
+      <div class="reveal-impact-flash" id="reveal-impact-flash"></div>
       <div class="pouch-fallback hidden" id="pouch-fallback">
         <div class="fallback-envelope" id="fallback-envelope">
           <div class="fallback-body"></div>
@@ -637,19 +615,6 @@ img{max-width:100%;display:block;}
       </div>
       <div class="pouch-name-tag" id="pouch-name-tag"></div>
       <div class="tear-tab" id="tear-tab"><span>✋ 드래그해서 뜯기</span></div>
-      <div class="reveal-overlay" id="reveal-overlay">
-        <div class="reveal-rays" id="reveal-rays"></div>
-        <div class="reveal-flash" id="reveal-flash"></div>
-        <div class="reveal-card" id="reveal-card">
-          <div class="card-shine" id="card-shine"></div>
-          <div class="reveal-visual" id="reveal-visual"></div>
-          <div class="reveal-grade" id="reveal-grade"></div>
-          <div class="reveal-name" id="reveal-name"></div>
-          <div class="reveal-special hidden" id="reveal-special"></div>
-        </div>
-        <div class="reveal-progress hidden" id="reveal-progress"></div>
-        <button class="reveal-next-btn" id="btn-reveal-next">계속하기</button>
-      </div>
     </div>
   </section>
 
@@ -658,7 +623,7 @@ img{max-width:100%;display:block;}
     <header class="sub-header"><h2 id="result-title">획득 결과</h2></header>
     <div class="result-grid" id="result-grid"></div>
     <footer class="lab-footer">
-      <button class="wide-btn" id="btn-result-again">🌱 다시 뽑기</button>
+      <button class="wide-btn" id="btn-result-again">🗑️ 다시 뽑기</button>
       <button class="wide-btn secondary" id="btn-result-main">연구소로 돌아가기</button>
     </footer>
   </section>
@@ -668,16 +633,19 @@ img{max-width:100%;display:block;}
     <div class="book-cover-frame">
       <header class="dex-header">
         <button class="back-btn dex-back" data-back="main">← 연구소로</button>
-        <h2 class="dex-title">정새싹 고문서</h2>
+        <h2 class="dex-title">쓰레기 도감</h2>
         <div class="dex-progress" id="dex-progress"></div>
       </header>
       <div class="dex-filters" id="dex-filters"></div>
       <div id="dex-deploy-hint" class="dex-deploy-hint hidden"></div>
-      <div id="dex-longpress-note" class="dex-longpress-note">정새싹을 꾹 누르면 여러 개를 선택해서 한꺼번에 판매할 수 있습니다.</div>
-      <div id="dex-select-toolbar" class="dex-select-toolbar hidden">
-        <div class="label">선택한 정새싹 <span class="count" id="dex-selected-count">0</span>종</div>
-        <button id="btn-sell-selected" type="button" disabled>🪙 선택한 정새싹 판매</button>
+      <div class="dex-select-toolbar hidden" id="dex-select-toolbar">
+        <span class="label">선택됨 <span class="count" id="dex-selected-count">0</span>개</span>
+        <div style="display:flex;gap:8px;">
+          <button id="btn-cancel-selection" style="background:rgba(0,0,0,.3);color:#E8D8AE;">취소</button>
+          <button id="btn-sell-selected">선택 판매</button>
+        </div>
       </div>
+      <div id="dex-longpress-note" class="dex-longpress-note"></div>
       <div class="dex-grid" id="dex-grid"></div>
     </div>
   </section>
@@ -694,7 +662,7 @@ img{max-width:100%;display:block;}
 
 <div class="modal-backdrop" id="modal-sell-confirm">
   <div class="modal-box">
-    <h3>정새싹 판매</h3>
+    <h3>쓰레기 판매</h3>
     <p id="sell-confirm-text" style="font-size:14px;line-height:1.6;color:var(--muted);font-weight:600;white-space:pre-line;"></p>
     <div class="modal-actions">
       <button class="btn-ghost" data-close="modal-sell-confirm">취소</button>
@@ -708,8 +676,12 @@ img{max-width:100%;display:block;}
     <h3>설정</h3>
     <div class="setting-row"><span>배경음악</span><label class="switch"><input type="checkbox" id="toggle-music"><span class="slider"></span></label></div>
     <div class="setting-row"><span>효과음</span><label class="switch"><input type="checkbox" id="toggle-sfx"><span class="slider"></span></label></div>
+    <div style="margin-top:8px;text-align:center;font-size:10px;color:var(--muted);font-weight:700;letter-spacing:.15px;">made by 정새싹게임즈's 정지호</div>
     <div class="modal-actions">
       <button class="btn-ghost danger" id="btn-open-reset">저장 데이터 초기화</button>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-ghost" id="btn-open-c">C</button>
     </div>
     <div class="modal-actions">
       <button class="btn-solid" data-close="modal-settings">닫기</button>
@@ -717,10 +689,22 @@ img{max-width:100%;display:block;}
   </div>
 </div>
 
+<div class="modal-backdrop" id="modal-c">
+  <div class="modal-box">
+    <h3>C</h3>
+    <p style="font-size:14px;line-height:1.6;color:var(--muted);font-weight:600;">비밀번호를 입력하세요.</p>
+    <input id="c-password" type="password" inputmode="text" autocomplete="off" placeholder="비밀번호" style="width:100%;margin-top:12px;padding:13px 14px;border-radius:12px;border:1px solid var(--line);background:var(--surface2);color:var(--ink);font:inherit;font-weight:800;outline:none;">
+    <div class="modal-actions">
+      <button class="btn-ghost" data-close="modal-c">취소</button>
+      <button class="btn-solid" id="btn-c-confirm">확인</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal-backdrop" id="modal-reset-confirm">
   <div class="modal-box">
     <h3>정말 초기화할까요?</h3>
-    <p style="font-size:14px;color:var(--muted);font-weight:600;">모든 씨앗, 정새싹, 획득 기록이 영구적으로 삭제됩니다. 이 작업은 되돌릴 수 없습니다.</p>
+    <p style="font-size:14px;color:var(--muted);font-weight:600;">모든 쓰레기 조각, 쓰레기, 획득 기록이 영구적으로 삭제됩니다. 이 작업은 되돌릴 수 없습니다.</p>
     <div class="modal-actions">
       <button class="btn-ghost" data-close="modal-reset-confirm">취소</button>
       <button class="btn-solid danger" id="btn-reset-confirm">초기화</button>
@@ -746,81 +730,65 @@ img{max-width:100%;display:block;}
 ========================================================= */
 var GRADES = {
   "일반": {label:"일반", color:"#4FB9E6", rank:0, slug:"common", sell:10},
-  "희귀": {label:"희귀", color:"#33BE72", rank:1, slug:"rare",   sell:35},
-  "영웅": {label:"영웅", color:"#A265EB", rank:2, slug:"epic",   sell:120},
-  "신화": {label:"신화", color:"#F0424F", rank:3, slug:"myth",   sell:500},
-  "전설": {label:"전설", color:"#E3AF33", rank:4, slug:"legend", sell:2000},
-  "???": {label:"???", color:"#C26BFF", rank:5, slug:"secret", sell:10000}
+  "희귀": {label:"희귀", color:"#33BE72", rank:1, slug:"rare", sell:35},
+  "초희귀": {label:"초희귀", color:"#5E78FF", rank:2, slug:"superrare", sell:80},
+  "영웅": {label:"영웅", color:"#A265EB", rank:3, slug:"epic", sell:120},
+  "신화": {label:"신화", color:"#F0424F", rank:4, slug:"myth", sell:500},
+  "전설": {label:"전설", color:"#E3AF33", rank:5, slug:"legend", sell:2000},
+  "☆☆☆": {label:"☆☆☆", color:"#C26BFF", rank:6, slug:"secret", sell:10000}
 };
-var GRADE_ORDER = ["일반","희귀","영웅","신화","전설","???"];
+var GRADE_ORDER = ["일반","희귀","초희귀","영웅","신화","전설","☆☆☆"];
 
 var SPROUTS = [
-  {id:"정새싹", grade:"일반", emoji:"🌱"},
-  {id:"번개 정새싹", grade:"일반", emoji:"⚡"},
-  {id:"불 정새싹", grade:"일반", emoji:"🔥"},
-  {id:"물 정새싹", grade:"일반", emoji:"💧"},
-  {id:"땅 정새싹", grade:"일반", emoji:"🪨"},
-  {id:"구름 정새싹", grade:"일반", emoji:"☁️"},
+  {id:"라이터", grade:"일반", emoji:"🔥", desc:"화르륵!"},
+  {id:"죽어가는 개미", grade:"일반", emoji:"🐜", desc:"으어어어어"},
+  {id:"코딱지", grade:"일반", emoji:"👃", desc:"후비적후비적.."},
+  {id:"햄버거", grade:"일반", emoji:"🍔", desc:"빠라빰빠빠"},
+  {id:"개발자", grade:"일반", emoji:"💻", desc:"그래 나다"},
 
-  {id:"폭탄 정새싹", grade:"희귀", emoji:"💣"},
-  {id:"폭풍 정새싹", grade:"희귀", emoji:"🌪️"},
-  {id:"에러 정새싹", grade:"희귀", emoji:"⚠️"},
-  {id:"뮤턴트 정새싹", grade:"희귀", emoji:"🧬"},
-  {id:"용암 정새싹", grade:"희귀", emoji:"🌋"},
-  {id:"가시 정새싹", grade:"희귀", emoji:"🌵"},
-  {id:"기사 정새싹", grade:"희귀", emoji:"⚔️"},
-  {id:"왕자 정새싹", grade:"희귀", emoji:"🤴"},
+  {id:"혈기왕성한 개미", grade:"희귀", emoji:"🐜", desc:"으쌰라으쌰!"},
+  {id:"방사능 옥수수", grade:"희귀", emoji:"🌽", desc:"한입 드실래요?"},
+  {id:"풍선", grade:"희귀", emoji:"🎈", desc:"우왕"},
+  {id:"수류탄", grade:"희귀", emoji:"💣", desc:"빠이어 인더 홀"},
+  {id:"수류탄인 척하는 아보카도", grade:"희귀", emoji:"🥑", desc:"아 들켰다"},
 
-  {id:"황제 정새싹", grade:"영웅", emoji:"👑"},
-  {id:"악마 정새싹", grade:"영웅", emoji:"😈"},
-  {id:"천사 정새싹", grade:"영웅", emoji:"😇"},
-  {id:"옛날 옛적 정새싹", grade:"영웅", emoji:"📜"},
-  {id:"사랑 정새싹", grade:"영웅", emoji:"💘"},
-  {id:"타락 정새싹", grade:"영웅", emoji:"🖤"},
+  {id:"강력한 개미", grade:"초희귀", emoji:"🐜", desc:"후후 기대해라"},
+  {id:"수소폭탄", grade:"초희귀", emoji:"☢️", desc:"퍼어어어엉"},
+  {id:"기관총", grade:"초희귀", emoji:"🔫", desc:"트드ㅡ드듣드드듣"},
+  {id:"전봇대", grade:"초희귀", emoji:"💡", desc:"키가 크네요."},
+  {id:"알루미늄 야구배트", grade:"초희귀", emoji:"🏏", desc:"깡!"},
 
-  {id:"바다의 신 정새싹", grade:"신화", emoji:"🔱"},
-  {id:"불의 신 정새싹", grade:"신화", emoji:"🔥"},
-  {id:"대지의 신 정새싹", grade:"신화", emoji:"🌍"},
-  {id:"사이보그 정새싹", grade:"신화", emoji:"🤖"},
-  {id:"미치광이 과학자 정새싹", grade:"신화", emoji:"🧪"},
+  {id:"The Great Master 개미", grade:"영웅", emoji:"👑", desc:"하하하 난 위대한 개미다"},
+  {id:"강아지", grade:"영웅", emoji:"🐶", desc:"그르르 월 월"},
+  {id:"누군가의 어금니", grade:"영웅", emoji:"🦷", desc:"아야!"},
+  {id:"서울우유", grade:"영웅", emoji:"🥛", desc:"인천우유는 없..."},
+  {id:"고장난 타이머", grade:"영웅", emoji:"⏱️", desc:"째깍째깍"},
 
-  {id:"신 정새싹", grade:"전설", emoji:"✨"},
-  {id:"대천사 정새싹", grade:"전설", emoji:"👼"},
-  {id:"대악마 정새싹", grade:"전설", emoji:"👹"},
+  {id:"오징어", grade:"신화", emoji:"🦑", desc:"너다!"},
+  {id:"외계인", grade:"신화", emoji:"👽", desc:"빵상"},
+  {id:"다이아몬드", grade:"신화", emoji:"💎", desc:"헤헤 비싼거다"},
+  {id:"초콜렛", grade:"신화", emoji:"🍫", desc:"가나"},
 
-  {id:"개발자 정새싹", grade:"???", emoji:"💻"}
+  {id:"감자", grade:"전설", emoji:"🥔", desc:"그렇다 이것은 감자다."},
+  {id:"해물파전", grade:"전설", emoji:"🥞", desc:"바삭바삭.."},
+  {id:"신호등", grade:"전설", emoji:"🚦", desc:"초록불이네요."},
+
+  {id:"정새싹", grade:"☆☆☆", emoji:"🦠", desc:"오오오오!!!!!"}
 ];
 var SPROUT_MAP = {};
 SPROUTS.forEach(function(s){ SPROUT_MAP[s.id]=s; });
-
 var SPROUTS_BY_GRADE = {};
 GRADE_ORDER.forEach(function(g){ SPROUTS_BY_GRADE[g]=SPROUTS.filter(function(s){return s.grade===g;}); });
-
 var PACKS = [
-  {
-    id:"normal", name:"일반 정새싹팩", price:50,
-    desc:"가장 기본적인 정새싹 채집팩입니다.",
-    probs:{"일반":50, "희귀":27, "영웅":14, "신화":6.5, "전설":2.4, "???":0.1},
-    pity:{threshold:30, guarantee:"희귀"}
-  },
-  {
-    id:"cool", name:"멋진 정새싹팩", price:150,
-    desc:"조금 더 희귀한 정새싹이 나올 확률이 높습니다.",
-    probs:{"일반":40, "희귀":30, "영웅":20, "신화":7, "전설":2.9, "???":0.1},
-    pity:{threshold:25, guarantee:"영웅"}
-  },
-  {
-    id:"awesome", name:"끝내주는 정새싹팩", price:400,
-    desc:"최고급 연구 재료로 만든 프리미엄 팩입니다.",
-    probs:{"일반":30, "희귀":30, "영웅":22, "신화":12, "전설":5.5, "???":0.5},
-    pity:{threshold:20, guarantee:"신화"}
-  }
+  {id:"normal", name:"일반 쓰레기팩", price:50, desc:"가장 기본적인 쓰레기 수집팩입니다.", probs:{"일반":50,"희귀":25,"초희귀":14,"영웅":7,"신화":3,"전설":0.9,"☆☆☆":0.1}, pity:{threshold:30, guarantee:"희귀"}},
+  {id:"cool", name:"멋진 쓰레기팩", price:150, desc:"조금 더 희귀한 쓰레기가 나올 확률이 높습니다.", probs:{"일반":38,"희귀":28,"초희귀":20,"영웅":8,"신화":4,"전설":1.8,"☆☆☆":0.2}, pity:{threshold:25, guarantee:"영웅"}},
+  {id:"awesome", name:"끝내주는 쓰레기팩", price:400, desc:"최고급 연구 재료로 만든 프리미엄 쓰레기팩입니다.", probs:{"일반":28,"희귀":26,"초희귀":20,"영웅":12,"신화":9,"전설":4.5,"☆☆☆":0.5}, pity:{threshold:20, guarantee:"신화"}}
 ];
 var PACK_MAP = {};
 PACKS.forEach(function(p){ PACK_MAP[p.id]=p; });
 
 var IMAGE_DIR = "images/";
-var STORAGE_KEY = "jeongsaessak_lab_save_v1";
+var STORAGE_KEY = "trash_lab_save_v1";
 
 /* =========================================================
    2. STATE
@@ -838,10 +806,11 @@ function defaultState(){
     lowestProb: null,
     pity: pity,
     levels: {},
-    labSlots: [null,null,null],
+    labSlots: [null],
     labUpgrades: {capacity:0, boost:0},
     lastProductionAt: Date.now(),
-    settings: {music:true, sfx:true}
+    settings: {music:true, sfx:true},
+    cInfinite: false
   };
 }
 var state = loadState();
@@ -862,12 +831,10 @@ function loadState(){
     if(parsed.settings.sfx===undefined) parsed.settings.sfx=true;
     if(!parsed.levels || typeof parsed.levels !== "object") parsed.levels = {};
     if(!parsed.labUpgrades || typeof parsed.labUpgrades !== "object") parsed.labUpgrades = {capacity:0, boost:0};
-    parsed.labUpgrades.capacity = Math.max(0, Math.min(3, Number(parsed.labUpgrades.capacity)||0));
+    parsed.labUpgrades.capacity = 0;
     parsed.labUpgrades.boost = Math.max(0, Math.min(5, Number(parsed.labUpgrades.boost)||0));
-    if(!Array.isArray(parsed.labSlots)) parsed.labSlots = [null,null,null];
-    var cap = 3 + parsed.labUpgrades.capacity;
-    while(parsed.labSlots.length < cap) parsed.labSlots.push(null);
-    parsed.labSlots = parsed.labSlots.slice(0, cap);
+    if(!Array.isArray(parsed.labSlots)) parsed.labSlots = [null];
+    parsed.labSlots = [parsed.labSlots[0] || null];
     if(!parsed.lastProductionAt) parsed.lastProductionAt = Date.now();
     return parsed;
   }catch(e){
@@ -896,24 +863,19 @@ function fmtPercent(n){
   return r + "%";
 }
 function clamp(v,min,max){ return Math.max(min,Math.min(max,v)); }
-function imagePath(name){ return IMAGE_DIR + name + ".jpg"; }
+function imagePath(name){ return IMAGE_DIR + name.replace(/\s+/g, "") + ".png"; }
 
 /* =========================================================
    IDLE LAB / RESEARCH
 ========================================================= */
 var GRADE_PRODUCTION = {
-  "일반":0.5,
-  "희귀":1.5,
-  "영웅":5,
-  "신화":18,
-  "전설":70,
-  "???":300
+  "일반":0.5, "희귀":1.5, "초희귀":3, "영웅":5, "신화":18, "전설":70, "☆☆☆":300
 };
 var OFFLINE_CAP_MS = 8 * 60 * 60 * 1000;
 var CAPACITY_COSTS = [1000, 5000, 20000];
 var BOOST_COSTS = [750, 2500, 8000, 20000, 50000];
 
-function getLabCapacity(){ return 3 + (state.labUpgrades.capacity||0); }
+function getLabCapacity(){ return 1; }
 function getSproutLevel(id){ return Math.max(1, Math.min(10, Number(state.levels[id]||1))); }
 function getSproutRate(sprout){ return GRADE_PRODUCTION[sprout.grade] || 0.5; }
 function getEffectiveSproutRate(sprout){
@@ -947,7 +909,7 @@ function applyIdleProduction(showToast){
   if(gained > 0){
     state.seeds += gained;
     showSeedGainVisual(gained);
-    if(showToast && delta >= 15000){ toast("🧪 연구소가 씨앗 +" + fmt(Math.floor(gained)) + "개를 생산했습니다!"); }
+    if(showToast && delta >= 15000){ toast("🧪 연구소가 쓰레기 조각 +" + fmt(Math.floor(gained)) + "개를 생산했습니다!"); }
   }
   return {gained:gained, delta:delta};
 }
@@ -955,7 +917,7 @@ function levelUpSprout(id){
   var owned = state.owned[id]||0;
   var level = getSproutLevel(id);
   if(owned < 3 || level >= 10){
-    toast(level >= 10 ? "이미 최대 레벨입니다." : "같은 정새싹 3개가 필요합니다.");
+    toast(level >= 10 ? "이미 최대 레벨입니다." : "같은 쓰레기 3개가 필요합니다.");
     return false;
   }
   state.owned[id] = owned - 3;
@@ -975,32 +937,27 @@ function renderIdleScreen(){
   document.getElementById("lab-filled").textContent = filled + " / " + cap;
   document.getElementById("lab-boost").textContent = "+" + boostPct + "%";
   document.getElementById("lab-last-online").textContent = "방금 계산";
-  document.getElementById("lab-capacity-desc").textContent = "현재 슬롯 " + cap + "개";
-  var capLv = state.labUpgrades.capacity||0;
-  var capBtn = document.getElementById("btn-upgrade-capacity");
-  if(capLv >= CAPACITY_COSTS.length){ capBtn.textContent="최대 확장"; capBtn.disabled=true; }
-  else { capBtn.textContent="🌱 " + fmt(CAPACITY_COSTS[capLv]); capBtn.disabled=state.seeds < CAPACITY_COSTS[capLv]; }
-  document.getElementById("lab-boost-desc").textContent = "배치된 정새싹 생산량 +" + boostPct + "%";
+  document.getElementById("lab-boost-desc").textContent = "용광로에 배치된 쓰레기 생산량 +" + boostPct + "%";
   var boostLv = state.labUpgrades.boost||0;
   var boostBtn = document.getElementById("btn-upgrade-boost");
   if(boostLv >= BOOST_COSTS.length){ boostBtn.textContent="최대 효율"; boostBtn.disabled=true; }
-  else { boostBtn.textContent="🌱 " + fmt(BOOST_COSTS[boostLv]); boostBtn.disabled=state.seeds < BOOST_COSTS[boostLv]; }
+  else { boostBtn.textContent="🗑️ " + fmt(BOOST_COSTS[boostLv]); boostBtn.disabled=state.seeds < BOOST_COSTS[boostLv]; }
   var slotWrap = document.getElementById("idle-slots");
   slotWrap.innerHTML = "";
   var discovered = SPROUTS.filter(function(s){ return !!state.discovered[s.id]; });
-  for(var i=0;i<cap;i++){
+  for(var i=0;i<1;i++){
     var slot = document.createElement("div"); slot.className="idle-slot";
-    var label = document.createElement("div"); label.className="idle-slot-label"; label.textContent="연구 슬롯 " + (i+1); slot.appendChild(label);
+    var label = document.createElement("div"); label.className="idle-slot-label"; label.textContent="쓰레기 용광로"; slot.appendChild(label);
     var current = state.labSlots[i] || "";
     var chooseBtn = document.createElement("button");
     chooseBtn.className = "idle-slot-picker";
     if(current && SPROUT_MAP[current]){
       chooseBtn.innerHTML = "<span class=\"slot-picker-icon\">" + SPROUT_MAP[current].emoji + "</span><span class=\"slot-picker-main\"><b>" + current + "</b><small>Lv." + getSproutLevel(current) + " · +" + fmtRate(getEffectiveSproutRate(SPROUT_MAP[current])*getLabBoost()) + "/초</small></span><span class=\"slot-picker-arrow\">›</span>";
     }else{
-      chooseBtn.innerHTML = "<span class=\"slot-picker-icon\">＋</span><span class=\"slot-picker-main\"><b>정새싹 선택</b><small>도감에서 배치할 정새싹을 고르세요</small></span><span class=\"slot-picker-arrow\">›</span>";
+      chooseBtn.innerHTML = "<span class=\"slot-picker-icon\">＋</span><span class=\"slot-picker-main\"><b>쓰레기 선택</b><small>도감에서 배치할 쓰레기를 고르세요</small></span><span class=\"slot-picker-arrow\">›</span>";
     }
     chooseBtn.addEventListener("click", function(idx){ return function(){
-      pendingLabSlotIndex = idx;
+      pendingLabSlotIndex = 0;
       AudioManager.playSfx("click");
       goToScreen("dex");
     }; }(i));
@@ -1018,26 +975,13 @@ function updateMainIdleSummary(){
   var b=document.getElementById("main-lab-filled"); if(b) b.textContent=filled+" / "+cap;
   var c=document.getElementById("main-lab-boost"); if(c) c.textContent="+"+boost+"%";
 }
-function upgradeLabCapacity(){
-  applyIdleProduction(false);
-  var lv=state.labUpgrades.capacity||0;
-  if(lv>=CAPACITY_COSTS.length){ toast("연구 슬롯은 최대입니다."); return; }
-  var cost=CAPACITY_COSTS[lv];
-  if(state.seeds<cost){ toast("씨앗이 부족합니다."); return; }
-  state.seeds-=cost;
-  state.labUpgrades.capacity++;
-  while(state.labSlots.length<getLabCapacity()) state.labSlots.push(null);
-  saveState();
-  AudioManager.playSfx("collect");
-  toast("🧪 연구 슬롯이 늘었습니다!");
-  renderIdleScreen(); renderMain();
-}
+function upgradeLabCapacity(){ return false; }
 function upgradeLabBoost(){
   applyIdleProduction(false);
   var lv=state.labUpgrades.boost||0;
   if(lv>=BOOST_COSTS.length){ toast("연구 효율은 최대입니다."); return; }
   var cost=BOOST_COSTS[lv];
-  if(state.seeds<cost){ toast("씨앗이 부족합니다."); return; }
+  if(state.seeds<cost){ toast("쓰레기 조각이 부족합니다."); return; }
   state.seeds-=cost;
   state.labUpgrades.boost++;
   saveState();
@@ -1086,7 +1030,6 @@ function buildVisualNode(sprout, opts){
   return wrap;
 }
 
-function gradeCountInPack(pack, grade){ return SPROUTS_BY_GRADE[grade].length; }
 function getSproutProbability(pack, sprout){
   var count = SPROUTS_BY_GRADE[sprout.grade].length;
   if(count===0) return 0;
@@ -1101,7 +1044,7 @@ var AudioManager = {
   bgmEl: null,
   bgmAvailable: false,
   sfxMap: {},
-  sfxNames: ["click","grab","tear","card","rare","mythic","legendary","dev","sell","collect"],
+  sfxNames: ["click","grab","tear","card","rare","mythic","legendary","dev","sell","collect","equip"],
   init: function(){
     try{
       this.bgmEl = new Audio("audio/laboratory.mp3");
@@ -1156,6 +1099,7 @@ var AudioManager = {
       card:[[520,0.12,"sine"],[780,0.12,"sine"]],
       sell:[[660,0.08,"square"],[990,0.08,"square"]],
       collect:[[440,0.1,"sine"]],
+      equip:[[440,0.06,"sine"],[660,0.09,"sine"]],
       rare:[[523,0.1,"sine"],[659,0.1,"sine"],[784,0.15,"sine"]],
       mythic:[[440,0.1,"sine"],[554,0.1,"sine"],[659,0.1,"sine"],[880,0.2,"sine"]],
       legendary:[[392,0.12,"sine"],[494,0.12,"sine"],[587,0.12,"sine"],[784,0.12,"sine"],[988,0.25,"sine"]],
@@ -1315,8 +1259,10 @@ function drawOne(pack, ignorePity){
   var grade = weightedGradePick(pack.probs);
   var guaranteeRank = GRADES[pack.pity.guarantee].rank;
   var pityCountAfter = state.pity[pack.id] + 1;
+  var pityForced = false;
   if(!ignorePity && pityCountAfter >= pack.pity.threshold && GRADES[grade].rank < guaranteeRank){
     grade = pack.pity.guarantee;
+    pityForced = true;
   }
   if(GRADES[grade].rank >= guaranteeRank){
     state.pity[pack.id] = 0;
@@ -1325,7 +1271,7 @@ function drawOne(pack, ignorePity){
   }
   var sprout = pickSproutOfGrade(grade);
   var prob = getSproutProbability(pack, sprout);
-  return {sprout:sprout, grade:grade, prob:prob};
+  return {sprout:sprout, grade:grade, prob:prob, pityForced:pityForced};
 }
 function drawTen(pack){
   var results = [];
@@ -1335,7 +1281,7 @@ function drawTen(pack){
   if(!hasGuarantee){
     var idx = results.length-1;
     var sprout = pickSproutOfGrade(pack.pity.guarantee);
-    results[idx] = {sprout:sprout, grade:pack.pity.guarantee, prob:getSproutProbability(pack, sprout)};
+    results[idx] = {sprout:sprout, grade:pack.pity.guarantee, prob:getSproutProbability(pack, sprout), pityForced:true};
     state.pity[pack.id] = 0;
   }
   return results;
@@ -1344,11 +1290,13 @@ function commitResult(pack, r){
   state.owned[r.sprout.id] = (state.owned[r.sprout.id]||0) + 1;
   state.discovered[r.sprout.id] = true;
   state.totalObtained++;
-  if(!state.lowestProb || r.prob < state.lowestProb.prob){
+  // Pity/guarantee-forced pulls are not "real" luck — excluding them keeps the
+  // lowest-probability record honest (a forced 신화 shouldn't look like a natural 0.x% hit).
+  if(!r.pityForced && (!state.lowestProb || r.prob < state.lowestProb.prob)){
     state.lowestProb = {sproutId:r.sprout.id, prob:r.prob};
   }
   state.recentSproutId = r.sprout.id;
-  state.history.unshift({ts:Date.now(), packName:pack.name, sproutId:r.sprout.id, grade:r.grade, prob:r.prob});
+  state.history.unshift({ts:Date.now(), packName:pack.name, sproutId:r.sprout.id, grade:r.grade, prob:r.prob, pityForced:!!r.pityForced});
   if(state.history.length>100) state.history.length = 100;
 }
 
@@ -1362,6 +1310,176 @@ function isWebGLAvailable(){
   }catch(e){ return false; }
 }
 var USE_3D = (typeof THREE !== "undefined") && isWebGLAvailable();
+
+// easeOutBack overshoots past 1 before settling — this is what gives the card
+// its springy "pop" instead of a flat, linear glide into place.
+function easeOutBack(t){
+  var c1 = 1.70158, c3 = c1 + 1;
+  t = Math.max(0, Math.min(1, t));
+  return 1 + c3*Math.pow(t-1,3) + c1*Math.pow(t-1,2);
+}
+function easeOutCubic(t){
+  t = Math.max(0, Math.min(1, t));
+  return 1 - Math.pow(1-t,3);
+}
+
+function roundedRectPath(ctx,x,y,w,h,r){
+  var rr=Math.min(r,w/2,h/2);
+  ctx.beginPath();
+  ctx.moveTo(x+rr,y);
+  ctx.arcTo(x+w,y,x+w,y+h,rr);
+  ctx.arcTo(x+w,y+h,x,y+h,rr);
+  ctx.arcTo(x,y+h,x,y,rr);
+  ctx.arcTo(x,y,x+w,y,rr);
+  ctx.closePath();
+}
+function drawPouchDecorTexture(pack, hexColor){
+  var canvas=document.createElement("canvas");
+  canvas.width=512; canvas.height=700;
+  var ctx=canvas.getContext("2d");
+  var color=hexColor || "#8FAE95";
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.strokeStyle=color; ctx.fillStyle=color;
+  ctx.globalAlpha=.92;
+  ctx.lineWidth=8;
+  ctx.strokeRect(34,34,444,632);
+  ctx.globalAlpha=.38; ctx.lineWidth=3;
+  ctx.strokeRect(52,52,408,596);
+  ctx.globalAlpha=.25;
+  ctx.beginPath(); ctx.arc(256,300,135,0,Math.PI*2); ctx.stroke();
+  ctx.beginPath(); ctx.arc(256,300,102,0,Math.PI*2); ctx.stroke();
+  ctx.globalAlpha=.16;
+  for(var i=0;i<8;i++){ ctx.beginPath(); ctx.moveTo(65+i*58,85); ctx.lineTo(15+i*58,615); ctx.stroke(); }
+  ctx.globalAlpha=.95;
+  // central laboratory seal
+  ctx.beginPath(); ctx.arc(256,300,68,0,Math.PI*2); ctx.fill();
+  ctx.fillStyle="#10181A";
+  ctx.beginPath(); ctx.arc(256,300,50,0,Math.PI*2); ctx.fill();
+  ctx.fillStyle=color; ctx.font="900 42px sans-serif"; ctx.textAlign="center"; ctx.textBaseline="middle";
+  ctx.fillText(pack.id==="normal" ? "Ⅰ" : pack.id==="cool" ? "Ⅱ" : "Ⅲ",256,292);
+  ctx.font="900 16px sans-serif"; ctx.fillText(pack.id==="normal" ? "BASIC" : pack.id==="cool" ? "ADVANCED" : "PRIME",256,330);
+  ctx.font="900 18px sans-serif"; ctx.fillText("SPROUTY LAB",256,575);
+  ctx.font="700 13px monospace"; ctx.fillText("SEALED SPECIMEN",256,603);
+  ctx.globalAlpha=1;
+  return canvas;
+}
+
+function drawCardTexture(sprout, grade, idx, total, prob){
+  var info=GRADES[grade]||GRADES["일반"];
+  var canvas=document.createElement("canvas");
+  canvas.width=768; canvas.height=1050;
+  var ctx=canvas.getContext("2d");
+  var w=canvas.width,h=canvas.height;
+  var color=info.color||"#4FB9E6";
+  var dark=info.slug==="secret" ? "#17111F" : "#10161A";
+  var grad=ctx.createLinearGradient(0,0,w,h);
+  grad.addColorStop(0,"#27343B");
+  grad.addColorStop(.34,dark);
+  grad.addColorStop(1,"#070A0C");
+  ctx.fillStyle=grad; ctx.fillRect(0,0,w,h);
+
+  // premium diagonal panels
+  ctx.save();
+  ctx.globalAlpha=.22;
+  ctx.fillStyle=color;
+  ctx.translate(-140,120); ctx.rotate(-0.48);
+  for(var i=0;i<6;i++){ ctx.fillRect(i*150,0,72,1300); }
+  ctx.restore();
+
+  // outer frame + inner frame
+  ctx.lineWidth=20; ctx.strokeStyle=color; ctx.globalAlpha=.9;
+  roundedRectPath(ctx,28,28,w-56,h-56,42); ctx.stroke();
+  ctx.lineWidth=4; ctx.globalAlpha=.45; ctx.strokeStyle="#FFFFFF";
+  roundedRectPath(ctx,52,52,w-104,h-104,32); ctx.stroke();
+  ctx.globalAlpha=1;
+
+  // corner ornament
+  ctx.strokeStyle=color; ctx.lineWidth=7;
+  [[72,160,1,1],[w-72,160,-1,1],[72,h-160,1,-1],[w-72,h-160,-1,-1]].forEach(function(c){
+    ctx.beginPath(); ctx.moveTo(c[0],c[1]); ctx.lineTo(c[0]+c[2]*58,c[1]); ctx.lineTo(c[0]+c[2]*58,c[1]+c[3]*58); ctx.stroke();
+  });
+
+  // header
+  ctx.fillStyle="#FFFFFF"; ctx.font="900 38px sans-serif"; ctx.textAlign="left";
+  ctx.fillText("SPROUTY",78,104);
+  ctx.fillStyle=color; ctx.font="900 26px sans-serif"; ctx.textAlign="right";
+  ctx.fillText(info.label.toUpperCase(),w-78,104);
+  ctx.globalAlpha=.75; ctx.strokeStyle=color; ctx.lineWidth=3;
+  ctx.beginPath();ctx.moveTo(78,126);ctx.lineTo(w-78,126);ctx.stroke();ctx.globalAlpha=1;
+
+  // center emblem — square frame instead of circular rings
+  var cx=w/2, cy=430;
+  ctx.save();
+  ctx.globalAlpha=.18; ctx.fillStyle=color;
+  ctx.fillRect(cx-218, cy-218, 436, 436);
+  ctx.globalAlpha=.65; ctx.strokeStyle=color; ctx.lineWidth=8;
+  ctx.strokeRect(cx-184, cy-184, 368, 368);
+  ctx.globalAlpha=.26; ctx.lineWidth=3;
+  ctx.strokeRect(cx-155, cy-155, 310, 310);
+  ctx.restore();
+
+  // emoji centerpiece
+  ctx.textAlign="center"; ctx.textBaseline="middle";
+  ctx.font="190px 'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif";
+  ctx.shadowColor=color; ctx.shadowBlur=38;
+  ctx.fillText(sprout && sprout.emoji ? sprout.emoji : "🌱",cx,cy+8);
+  ctx.shadowBlur=0;
+
+  // name
+  ctx.fillStyle="#F7FBFF"; ctx.font="900 46px sans-serif";
+  var name=sprout ? sprout.id : "쓰레기";
+  if(name.length>10) ctx.font="900 38px sans-serif";
+  ctx.fillText(name,cx,650);
+
+  // one-line description — intentionally large and easy to read
+  var desc = sprout && sprout.desc ? sprout.desc : "";
+  if(desc){
+    ctx.textAlign="center";
+    ctx.fillStyle="#FFE9A8";
+    var descSize = 28;
+    ctx.font="900 "+descSize+"px sans-serif";
+    while(ctx.measureText(desc).width > w-150 && descSize > 18){
+      descSize -= 1;
+      ctx.font="900 "+descSize+"px sans-serif";
+    }
+    ctx.shadowColor="rgba(255,210,90,.38)"; ctx.shadowBlur=14;
+    ctx.fillText(desc,cx,694);
+    ctx.shadowBlur=0;
+  }
+
+  // grade plaque
+  ctx.fillStyle=color; roundedRectPath(ctx,174,738,w-348,78,39); ctx.fill();
+  ctx.fillStyle="#081015"; ctx.font="900 34px sans-serif"; ctx.fillText(info.label,cx,779);
+
+  // data block
+  ctx.textAlign="left"; ctx.fillStyle="#B9C7CE"; ctx.font="700 24px sans-serif";
+  ctx.fillText("출현 확률",92,870);
+  ctx.textAlign="right"; ctx.fillStyle="#FFFFFF"; ctx.font="900 28px sans-serif";
+  ctx.fillText((Number(prob)||0).toFixed(3).replace(/0+$/,'').replace(/\.$/,'')+"%",w-92,870);
+  ctx.textAlign="left"; ctx.fillStyle="#B9C7CE"; ctx.font="700 24px sans-serif";
+  ctx.fillText("연차 위치",92,920);
+  ctx.textAlign="right"; ctx.fillStyle="#FFFFFF"; ctx.font="900 28px sans-serif";
+  ctx.fillText((idx+1)+" / "+total,w-92,920);
+
+  // developer easter egg remains, but only when the item itself is the developer
+  if(sprout && sprout.id==="개발자"){
+    ctx.textAlign="center"; ctx.fillStyle="#FFE9A8"; ctx.font="800 20px sans-serif";
+    ctx.fillText("개발자가 왜 쓰레기 도감에 들어왔습니다.",cx,960);
+  }
+
+  // serialized-feeling footer / card code
+  ctx.textAlign="left"; ctx.fillStyle="#7B8A92"; ctx.font="700 18px monospace";
+  ctx.fillText("SPROUTY • SPECIMEN / "+(sprout?sprout.id:"UNKNOWN"),78,1000);
+  ctx.textAlign="right"; ctx.fillText("R-"+info.rank+" / 001",w-78,1000);
+
+  // holographic shine stripe
+  ctx.save();
+  ctx.globalAlpha=.22; ctx.fillStyle="#FFFFFF";
+  ctx.translate(w*.16,h*.15);ctx.rotate(-0.72);ctx.fillRect(0,0,34,h*1.4);
+  ctx.restore();
+
+  return canvas;
+}
 
 function PouchScene(canvas){
   this.ok = false;
@@ -1391,6 +1509,21 @@ function PouchScene(canvas){
     this.rightHalf = new THREE.Mesh(halfGeo, this.matRight);
     this.leftHalf.position.x = -0.55;
     this.rightHalf.position.x = 0.55;
+
+    // Premium printed seal on the outside of each pouch half. These move with the pouch as it tears apart.
+    var pouchTex0 = new THREE.CanvasTexture(drawPouchDecorTexture(PACKS[0], "#8FAE95"));
+    pouchTex0.encoding = THREE.sRGBEncoding;
+    var pouchDecMatL = new THREE.MeshBasicMaterial({map:pouchTex0,transparent:true,side:THREE.DoubleSide,depthWrite:false});
+    var pouchDecMatR = pouchDecMatL.clone();
+    pouchDecMatR.map = pouchTex0;
+    this.pouchDecorLeft = new THREE.Mesh(new THREE.PlaneGeometry(.93,1.27), pouchDecMatL);
+    this.pouchDecorRight = new THREE.Mesh(new THREE.PlaneGeometry(.93,1.27), pouchDecMatR);
+    this.pouchDecorLeft.position.set(0,0,0.036);
+    this.pouchDecorRight.position.set(0,0,0.036);
+    this.leftHalf.add(this.pouchDecorLeft);
+    this.rightHalf.add(this.pouchDecorRight);
+    this.pouchDecorTexture = pouchTex0;
+
     this.pouchGroup.add(this.leftHalf, this.rightHalf);
 
     var glowGeo = new THREE.PlaneGeometry(1.6, 2.2);
@@ -1399,15 +1532,22 @@ function PouchScene(canvas){
     this.glowMesh.position.z = -0.05;
     this.pouchGroup.add(this.glowMesh);
 
-    var cardGeo = new THREE.PlaneGeometry(1.15, 1.6);
-    this.cardMat = new THREE.MeshStandardMaterial({color:0xffffff, roughness:0.4, metalness:0.15, side:THREE.DoubleSide, emissive:0x000000});
-    this.card = new THREE.Mesh(cardGeo, this.cardMat);
+    // A thin Box (not a flat Plane) so the card has real depth/edges to catch
+    // light as it tumbles — this is what actually reads as "a 3D card", not a sprite.
+    var cardGeo = new THREE.BoxGeometry(1.5, 2.05, 0.075);
+    this.cardEdgeMat = new THREE.MeshStandardMaterial({color:0x182026, roughness:0.22, metalness:0.7, emissive:0x080B0D, emissiveIntensity:0.15});
+    this.cardMat = this.cardEdgeMat;
+    var blankFront = new THREE.MeshBasicMaterial({color:0x11181D});
+    var blankBack = new THREE.MeshBasicMaterial({color:0x090D10});
+    this.card = new THREE.Mesh(cardGeo, [this.cardEdgeMat,this.cardEdgeMat,this.cardEdgeMat,this.cardEdgeMat,blankFront,blankBack]);
+    this.cardTexture = null;
     this.card.position.set(0,0,0);
     this.card.scale.set(0.01,0.01,0.01);
     this.scene.add(this.card);
-    this.cardTarget = new THREE.Vector3(0,0,0);
-    this.cardScaleTarget = new THREE.Vector3(0.01,0.01,0.01);
+    this.cardRestPos = new THREE.Vector3(0,0,2.55);
+    this._reveal = null; // {start,duration,spins,ringSpawned,ringColor,landed,landTime} while popping/floating
 
+    this.ringSystems = [];
     this.particleSystems = [];
     this.shakeState = {t:0, duration:0, intensity:0};
     this.clock = new THREE.Clock();
@@ -1433,15 +1573,23 @@ PouchScene.prototype.setupForPack = function(pack){
   var c = colorMap[pack.id] || 0x8fae95;
   this.matLeft.color.setHex(c);
   this.matRight.color.setHex(c);
+  var decorCanvas=drawPouchDecorTexture(pack, "#"+c.toString(16).padStart(6,"0"));
+  var decorTex=new THREE.CanvasTexture(decorCanvas);
+  decorTex.encoding=THREE.sRGBEncoding;
+  if(this.pouchDecorTexture) this.pouchDecorTexture.dispose();
+  this.pouchDecorTexture=decorTex;
+  this.pouchDecorLeft.material.map=decorTex;
+  this.pouchDecorLeft.material.needsUpdate=true;
+  this.pouchDecorRight.material.map=decorTex;
+  this.pouchDecorRight.material.needsUpdate=true;
+  this.leftHalf.material.roughness=.48;
+  this.rightHalf.material.roughness=.48;
   this.leftHalf.position.set(-0.55,0,0);
   this.rightHalf.position.set(0.55,0,0);
   this.leftHalf.rotation.set(0,0,0);
   this.rightHalf.rotation.set(0,0,0);
   this.glowMat.opacity = 0;
-  this.card.scale.set(0.01,0.01,0.01);
-  this.card.position.set(0,0,0);
-  this.cardTarget.set(0,0,0);
-  this.cardScaleTarget.set(0.01,0.01,0.01);
+  this.resetCard();
 };
 PouchScene.prototype.setTearProgress = function(p){
   if(!this.ok) return;
@@ -1453,26 +1601,68 @@ PouchScene.prototype.setTearProgress = function(p){
   this.rightHalf.rotation.y = -p*0.5;
   this.glowMat.opacity = p*0.85;
 };
-PouchScene.prototype.revealCard = function(grade, slow){
+PouchScene.prototype.revealCard = function(result, idx, total){
   if(!this.ok) return;
-  var info = GRADES[grade];
+  var grade = result.grade, sprout = result.sprout;
+  var info = GRADES[grade] || GRADES["일반"];
   var colorHex = info.slug==="secret" ? 0xffffff : parseInt(info.color.replace("#","0x"));
-  this.cardMat.color.setHex(colorHex);
-  this.cardMat.emissive.setHex(colorHex);
-  this.cardMat.emissiveIntensity = 0.35;
-  this.cardTarget.set(0,0,2.6);
-  this.cardScaleTarget.set(1,1,1);
-  this._cardSpin = true;
-  var self = this;
-  clearTimeout(this._spinTimer);
-  this._spinTimer = setTimeout(function(){ self._cardSpin=false; }, slow?1400:800);
+  var texCanvas = drawCardTexture(sprout, grade, idx, total, result.prob);
+  var tex = new THREE.CanvasTexture(texCanvas);
+  tex.encoding = THREE.sRGBEncoding;
+  tex.anisotropy = this.renderer.capabilities.getMaxAnisotropy ? this.renderer.capabilities.getMaxAnisotropy() : 1;
+  tex.needsUpdate = true;
+  if(this.cardTexture) this.cardTexture.dispose();
+  if(this._cardFrontMat) this._cardFrontMat.dispose();
+  if(this._cardBackMat) this._cardBackMat.dispose();
+  if(this._cardBackTexture) this._cardBackTexture.dispose();
+  this.cardTexture = tex;
+  if(this.cardFrontMesh){ this.card.remove(this.cardFrontMesh); if(this.cardFrontMesh.material) this.cardFrontMesh.material.dispose(); this.cardFrontMesh.geometry.dispose(); this.cardFrontMesh=null; }
+  if(this.cardBackMesh){ this.card.remove(this.cardBackMesh); if(this.cardBackMesh.material) this.cardBackMesh.material.dispose(); this.cardBackMesh.geometry.dispose(); this.cardBackMesh=null; }
+  var frontMat = new THREE.MeshBasicMaterial({map:tex, side:THREE.FrontSide});
+  var frontPlane = new THREE.Mesh(new THREE.PlaneGeometry(1.43,1.98), frontMat);
+  frontPlane.position.z=0.041;
+  this.card.add(frontPlane);
+  this.cardFrontMesh=frontPlane;
+  var backCanvas=document.createElement("canvas"); backCanvas.width=256; backCanvas.height=350;
+  var bctx=backCanvas.getContext("2d");
+  var bg=bctx.createLinearGradient(0,0,256,350); bg.addColorStop(0,"#1A242A"); bg.addColorStop(1,"#080C0F"); bctx.fillStyle=bg; bctx.fillRect(0,0,256,350);
+  bctx.strokeStyle=info.color; bctx.lineWidth=8; bctx.strokeRect(14,14,228,322);
+  bctx.fillStyle="#fff"; bctx.font="900 34px sans-serif"; bctx.textAlign="center"; bctx.fillText("쓰레기",128,155);
+  bctx.fillStyle=info.color; bctx.font="900 24px sans-serif"; bctx.fillText(info.label,128,195);
+  bctx.fillStyle="#82909A"; bctx.font="700 14px sans-serif"; bctx.fillText("SPROUTY LAB",128,235);
+  var backTex=new THREE.CanvasTexture(backCanvas); backTex.encoding=THREE.sRGBEncoding;
+  var backMat=new THREE.MeshBasicMaterial({map:backTex,side:THREE.FrontSide});
+  var backPlane=new THREE.Mesh(new THREE.PlaneGeometry(1.43,1.98), backMat);
+  backPlane.position.z=-0.041;
+  backPlane.rotation.y=Math.PI;
+  this.card.add(backPlane);
+  this.cardBackMesh=backPlane;
+  this.card.material=this.cardEdgeMat;
+  this._cardFrontMat=frontMat;
+  this._cardBackMat=backMat;
+  this._cardBackTexture=backTex;
+  this.card.position.set(0,0,0);
+  this.card.scale.set(0.04,0.04,0.04);
+  this.card.rotation.set(0,0,0);
+  this.cardEdgeMat.color.setHex(colorHex);
+  this.cardEdgeMat.emissive.setHex(colorHex);
+  this.cardEdgeMat.emissiveIntensity=0.16;
+  this._reveal = {
+    start: performance.now(),
+    duration: info.rank>=4 ? 1200 : 820,
+    spins: info.rank>=5 ? 2.65 : info.rank>=4 ? 2.15 : info.rank>=2 ? 1.45 : 1.05,
+    ringSpawned: false,
+    ringColor: colorHex,
+    landed: false,
+    landTime: 0
+  };
 };
 PouchScene.prototype.resetCard = function(){
   if(!this.ok) return;
+  this._reveal = null;
   this.card.scale.set(0.01,0.01,0.01);
   this.card.position.set(0,0,0);
-  this.cardTarget.set(0,0,0);
-  this.cardScaleTarget.set(0.01,0.01,0.01);
+  this.card.rotation.set(0,0,0);
 };
 PouchScene.prototype.burst = function(colorHex, count){
   if(!this.ok) return;
@@ -1481,7 +1671,7 @@ PouchScene.prototype.burst = function(colorHex, count){
     var positions = new Float32Array(count*3);
     var velocities = [];
     for(var i=0;i<count;i++){
-      positions[i*3]=0; positions[i*3+1]=0; positions[i*3+2]=2.6;
+      positions[i*3]=0; positions[i*3+1]=0; positions[i*3+2]=this.cardRestPos.z;
       var theta = Math.random()*Math.PI*2, phi = Math.acos(2*Math.random()-1);
       var speed = 1.2 + Math.random()*2.4;
       velocities.push({
@@ -1500,15 +1690,51 @@ PouchScene.prototype.burst = function(colorHex, count){
 PouchScene.prototype.shakeCamera = function(intensity, duration){
   this.shakeState = {t:0, duration:duration, intensity:intensity};
 };
+PouchScene.prototype.spawnRing = function(colorHex){
+  if(!this.ok) return;
+  try{
+    var geo = new THREE.RingGeometry(0.7, 0.88, 48);
+    var mat = new THREE.MeshBasicMaterial({color:colorHex, transparent:true, opacity:0.85, side:THREE.DoubleSide, depthWrite:false, blending:THREE.AdditiveBlending});
+    var mesh = new THREE.Mesh(geo, mat);
+    mesh.position.copy(this.card.position);
+    mesh.position.z += 0.03;
+    this.scene.add(mesh);
+    this.ringSystems.push({mesh:mesh, geo:geo, mat:mat, life:0, maxLife:0.5});
+  }catch(e){}
+};
 PouchScene.prototype.tick = function(){
   if(!this.ok) return;
   var dt = Math.min(this.clock.getDelta(), 0.05);
-  this.pouchGroup.rotation.y = Math.sin(performance.now()/1200)*0.04;
+  var now = performance.now();
+  this.pouchGroup.rotation.y = Math.sin(now/1200)*0.04;
 
-  this.card.position.lerp(this.cardTarget, 0.09);
-  this.card.scale.lerp(this.cardScaleTarget, 0.09);
-  if(this._cardSpin) this.card.rotation.y += dt*1.6;
-  else this.card.rotation.y += (0 - this.card.rotation.y)*0.1;
+  if(this._reveal){
+    var rv = this._reveal;
+    var t = (now - rv.start) / rv.duration;
+    var popT = easeOutBack(t);           // overshoots ~1.1 then settles at 1 — the "pop"
+    var turnT = easeOutCubic(Math.min(1, t));
+
+    var scale = 0.04 + (1 - 0.04) * popT;
+    this.card.scale.set(scale, scale, scale);
+    this.card.position.z = this.cardRestPos.z * popT;
+    this.card.rotation.y = (1 - turnT) * Math.PI * 2 * rv.spins;
+    this.card.rotation.x = (1 - turnT) * 0.45;
+
+    if(!rv.ringSpawned && t >= 0.55){
+      rv.ringSpawned = true;
+      this.spawnRing(rv.ringColor);
+    }
+    if(t >= 1 && !rv.landed){
+      rv.landed = true;
+      rv.landTime = now;
+    }
+    if(rv.landed){
+      // Gentle post-landing hover so the card doesn't just go dead-still.
+      var ft = (now - rv.landTime) / 1000;
+      this.card.position.y = Math.sin(ft*1.6) * 0.045;
+      this.card.rotation.y = Math.sin(ft*0.9) * 0.05;
+    }
+  }
 
   for(var i=this.particleSystems.length-1;i>=0;i--){
     var ps = this.particleSystems[i];
@@ -1525,6 +1751,20 @@ PouchScene.prototype.tick = function(){
       this.scene.remove(ps.points);
       ps.geo.dispose(); ps.mat.dispose();
       this.particleSystems.splice(i,1);
+    }
+  }
+
+  for(var k=this.ringSystems.length-1;k>=0;k--){
+    var ring = this.ringSystems[k];
+    ring.life += dt;
+    var rt = Math.min(1, ring.life/ring.maxLife);
+    var rs = 0.4 + rt*3.4;
+    ring.mesh.scale.set(rs,rs,rs);
+    ring.mat.opacity = Math.max(0, 1-rt) * 0.85;
+    if(ring.life >= ring.maxLife){
+      this.scene.remove(ring.mesh);
+      ring.geo.dispose(); ring.mat.dispose();
+      this.ringSystems.splice(k,1);
     }
   }
 
@@ -1592,41 +1832,71 @@ function burstParticlesDOM(container, colors, count){
 }
 
 var GRADE_PARTICLE_COLORS = {
-  "일반": ["#eaf6ff","#cfeaff"],
-  "희귀": ["#33BE72","#8CE6B0"],
-  "영웅": ["#A265EB","#D6B4FF"],
-  "신화": ["#F0424F","#FF9AA2"],
-  "전설": ["#E3AF33","#FFE29A"],
-  "???": ["#ff5e5e","#ffb84d","#fff96b","#6bffa0","#6bd3ff","#c26bff"]
+  "일반":["#eaf6ff","#cfeaff"], "희귀":["#33BE72","#8CE6B0"], "초희귀":["#5E78FF","#A8B7FF"], "영웅":["#A265EB","#D6B4FF"], "신화":["#F0424F","#FF9AA2"], "전설":["#E3AF33","#FFE29A"], "☆☆☆":["#ff5e5e","#ffb84d","#fff96b","#6bffa0","#6bd3ff","#c26bff"]
 };
-var GRADE_PARTICLE_COUNT = {"일반":8, "희귀":16, "영웅":26, "신화":38, "전설":52, "???":60};
+var GRADE_PARTICLE_COUNT = {"일반":8,"희귀":16,"초희귀":21,"영웅":26,"신화":38,"전설":52,"☆☆☆":60};
 
 function playGradeEffect(grade, stageEl){
-  var colors = GRADE_PARTICLE_COLORS[grade];
-  var count = GRADE_PARTICLE_COUNT[grade];
+  var colors = GRADE_PARTICLE_COLORS[grade] || GRADE_PARTICLE_COLORS["일반"];
+  var count = GRADE_PARTICLE_COUNT[grade] || 8;
+  var rank = GRADES[grade] ? GRADES[grade].rank : 0;
+  var flash = document.getElementById("reveal-impact-flash");
+
+  // More layered bursts as rarity increases. The reveal should feel substantially
+  // different between normal and ultra-rare without changing the core gameplay.
   if(USE_3D && pouchScene && pouchScene.ok){
     var hexColors = colors.map(function(c){ return parseInt(c.replace("#","0x")); });
-    var bursts = grade==="???" ? 5 : (grade==="전설" ? 2 : 1);
+    var bursts = rank >= 6 ? 7 : rank >= 5 ? 5 : rank >= 4 ? 4 : rank >= 3 ? 3 : rank >= 2 ? 2 : 1;
+    var burstCount = Math.ceil(count / bursts);
     for(var b=0; b<bursts; b++){
       (function(bi){
         setTimeout(function(){
-          pouchScene.burst(hexColors[bi % hexColors.length], Math.ceil(count/bursts));
-        }, bi*90);
+          pouchScene.burst(hexColors[bi % hexColors.length], burstCount);
+          if(rank >= 4) pouchScene.spawnRing(hexColors[bi % hexColors.length]);
+        }, bi * (rank >= 5 ? 80 : 65));
       })(b);
     }
   } else {
-    burstParticlesDOM(stageEl, colors, Math.min(count, 40));
+    burstParticlesDOM(stageEl, colors, Math.min(count * (rank>=4 ? 2 : 1), 70));
   }
-  if(GRADES[grade].rank >= 2){
+
+  // Impact shake scales with rarity.
+  if(rank >= 1){
     stageEl.classList.remove("shake"); void stageEl.offsetWidth; stageEl.classList.add("shake");
     if(USE_3D && pouchScene && pouchScene.ok){
-      pouchScene.shakeCamera(GRADES[grade].rank>=3 ? 0.28 : 0.14, GRADES[grade].rank>=3 ? 0.6 : 0.4);
+      var intensity = rank >= 6 ? 0.48 : rank >= 5 ? 0.40 : rank >= 4 ? 0.30 : rank >= 3 ? 0.22 : rank >= 2 ? 0.16 : 0.08;
+      var duration = rank >= 5 ? 0.8 : rank >= 4 ? 0.65 : 0.45;
+      pouchScene.shakeCamera(intensity, duration);
     }
   }
-  if(grade==="???"){
+
+  // Flash impacts: one for epic+, double flash for legend+, and a rapid triple pulse for ☆☆☆.
+  if(flash && rank >= 3){
+    flash.classList.remove("show","strong");
+    void flash.offsetWidth;
+    if(rank >= 5) flash.classList.add("strong");
+    flash.classList.add("show");
+    if(rank >= 5){
+      setTimeout(function(){
+        flash.classList.remove("show");
+        void flash.offsetWidth;
+        flash.classList.add("show");
+      }, 180);
+    }
+    if(rank >= 6){
+      setTimeout(function(){
+        flash.classList.remove("show");
+        void flash.offsetWidth;
+        flash.classList.add("show");
+      }, 360);
+    }
+  }
+
+  if(grade==="☆☆☆"){
     stageEl.classList.remove("glitch"); void stageEl.offsetWidth; stageEl.classList.add("glitch");
   }
 }
+
 
 /* =========================================================
    8. SCREEN NAVIGATION
@@ -1717,6 +1987,15 @@ function renderPackGrid(){
     var card = document.createElement("div");
     card.className = "pack-card";
 
+    card.dataset.pack = pack.id;
+
+    var emblem = document.createElement("div");
+    emblem.className = "pack-emblem pack-emblem-" + pack.id;
+    var emblemMark = document.createElement("span");
+    emblemMark.textContent = pack.id === "normal" ? "I" : pack.id === "cool" ? "II" : "III";
+    emblem.appendChild(emblemMark);
+    card.appendChild(emblem);
+
     var name = document.createElement("div");
     name.className = "pack-name";
     name.textContent = pack.name;
@@ -1729,7 +2008,7 @@ function renderPackGrid(){
 
     var price = document.createElement("div");
     price.className = "pack-price";
-    price.innerHTML = '<span class="seed-icon">🌱</span> ' + fmt(pack.price) + ' / 1회';
+    price.innerHTML = '<span class="seed-icon">🗑️</span> ' + fmt(pack.price) + ' / 1회';
     card.appendChild(price);
 
     var probList = document.createElement("div");
@@ -1761,14 +2040,14 @@ function renderPackGrid(){
     btnRow.className = "pack-btns";
     var btn1 = document.createElement("button");
     btn1.className = "pack-btn";
-    btn1.textContent = "1회 뽑기\n🌱" + fmt(pack.price);
+    btn1.textContent = "1회 뽑기\n🗑️" + fmt(pack.price);
     btn1.style.whiteSpace = "pre-line";
     btn1.disabled = state.seeds < pack.price;
     btn1.addEventListener("click", function(){ AudioManager.playSfx("click"); requestOpen(pack, 1); });
 
     var btn10 = document.createElement("button");
     btn10.className = "pack-btn ghost";
-    btn10.textContent = "10연차\n🌱" + fmt(pack.price*10);
+    btn10.textContent = "10연차\n🗑️" + fmt(pack.price*10);
     btn10.style.whiteSpace = "pre-line";
     btn10.disabled = state.seeds < pack.price*10;
     btn10.addEventListener("click", function(){ AudioManager.playSfx("click"); requestOpen(pack, 10); });
@@ -1791,10 +2070,11 @@ var dragging = false, dragStartX = 0, currentProgress = 0, tornSoundPlayed = fal
 function requestOpen(pack, count){
   var cost = pack.price*count;
   if(state.seeds < cost){
-    toast("씨앗이 부족합니다.");
+    toast("쓰레기 조각이 부족합니다.");
     return;
   }
   pendingOpen = {pack:pack, count:count};
+  currentSession = null;
   currentProgress = 0;
   tornSoundPlayed = false;
   tearLocked = false;
@@ -1803,9 +2083,9 @@ function requestOpen(pack, count){
   document.getElementById("btn-opening-cancel").style.visibility = "visible";
   document.getElementById("tear-tab").style.display = "flex";
   document.getElementById("tear-tab").style.opacity = 1;
-  document.getElementById("reveal-overlay").classList.remove("show");
   document.getElementById("opening-pity").textContent = pityLabel(pack);
   document.getElementById("pouch-name-tag").textContent = pack.name;
+  document.getElementById("pouch-name-tag").classList.add("hidden");
   goToScreen("opening");
   requestAnimationFrame(function(){
     resizeCanvas();
@@ -1859,7 +2139,7 @@ function onEnvelopeOpened(){
   var pack = pendingOpen.pack, count = pendingOpen.count;
   var cost = pack.price*count;
   if(state.seeds < cost){
-    toast("씨앗이 부족합니다.");
+    toast("쓰레기 조각이 부족합니다.");
     goToScreen("packs");
     return;
   }
@@ -1868,110 +2148,58 @@ function onEnvelopeOpened(){
   results.forEach(function(r){ commitResult(pack, r); });
   saveState();
   updateSeedDisplays();
-  currentSession = {pack:pack, count:count, results:results, index:0};
+  currentSession = {pack:pack, count:count, results:results, index:0, busy:false};
   revealNext();
 }
 function revealNext(){
   var session = currentSession;
+  if(!session || session.index>=session.count) return;
+  session.busy = false;
   var result = session.results[session.index];
   showRevealCard(result, session.index, session.count);
 }
 function showRevealCard(result, idx, total){
-  var sprout = result.sprout, grade = result.grade;
-  var info = GRADES[grade];
-  var visualBox = document.getElementById("reveal-visual");
-  visualBox.innerHTML = "";
-  visualBox.appendChild(buildVisualNode(sprout));
-
-  var gradeEl = document.getElementById("reveal-grade");
-  gradeEl.textContent = info.label;
-  gradeEl.className = "reveal-grade grade-" + info.slug;
-  gradeEl.style.background = info.slug==="secret" ? "rgba(255,255,255,0.08)" : (info.color + "22");
-
-  var nameEl = document.getElementById("reveal-name");
-  nameEl.textContent = sprout.id;
-  nameEl.className = "reveal-name grade-" + info.slug;
-
-  var specialEl = document.getElementById("reveal-special");
-  if(sprout.id === "개발자 정새싹"){
-    specialEl.textContent = "개발자가 직접 등장했습니다.";
-    specialEl.classList.remove("hidden");
-  } else {
-    specialEl.classList.add("hidden");
-  }
-
-  var progressEl = document.getElementById("reveal-progress");
-  if(total>1){
-    progressEl.textContent = (idx+1) + " / " + total;
-    progressEl.classList.remove("hidden");
-  } else {
-    progressEl.classList.add("hidden");
-  }
-
-  var card = document.getElementById("reveal-card");
-  card.className = "reveal-card glow-" + info.slug;
-  card.style.animation = "none";
-  void card.offsetWidth;
-  card.style.animation = "";
-
   var stage = document.getElementById("opening-stage");
-  var overlay = document.getElementById("reveal-overlay");
-  overlay.classList.add("show");
-
   if(USE_3D && pouchScene && pouchScene.ok){
-    pouchScene.revealCard(grade, grade==="전설" || grade==="???");
+    pouchScene.revealCard(result, idx, total);
   }
 
-  var sfxName = grade==="일반" ? "card" : grade==="희귀" ? "card" : grade==="영웅" ? "rare" : grade==="신화" ? "mythic" : grade==="전설" ? "legendary" : "dev";
+  // The reveal is intentionally rendered only inside the Three.js scene.
+  // No duplicate 2D popup/card is created here anymore.
+  var hint = document.getElementById("pouch-name-tag");
+  if(hint) hint.classList.add("hidden");
+
+  var sfxName = result.grade==="일반" ? "card" : result.grade==="희귀" ? "card" : result.grade==="초희귀" ? "rare" : result.grade==="영웅" ? "rare" : result.grade==="신화" ? "mythic" : result.grade==="전설" ? "legendary" : "dev";
   AudioManager.playSfx(sfxName);
-  playGradeEffect(grade, stage);
-
-  // Light-ray burst behind the card — bigger/brighter the higher the rarity
-  var raysEl = document.getElementById("reveal-rays");
-  raysEl.classList.remove("spin");
-  void raysEl.offsetWidth;
-  raysEl.style.setProperty("--ray-color", info.color);
-  raysEl.style.setProperty("--ray-opacity", info.rank>=4 ? "0.5" : info.rank>=2 ? "0.4" : "0.22");
-  if(info.rank >= 1){ raysEl.classList.add("spin"); }
-
-  // Full-screen flash on reveal, scaled by rarity
-  var flashEl = document.getElementById("reveal-flash");
-  flashEl.classList.remove("pulse");
-  void flashEl.offsetWidth;
-  flashEl.style.setProperty("--flash-opacity", info.rank>=4 ? "0.95" : info.rank>=2 ? "0.75" : "0.4");
-  flashEl.classList.add("pulse");
-
-  // Holographic shine sweep across the card for epic and above
-  var shineEl = document.getElementById("card-shine");
-  shineEl.classList.remove("sweep");
-  void shineEl.offsetWidth;
-  if(info.rank >= 2){ shineEl.classList.add("sweep"); }
-
-  var nextBtn = document.getElementById("btn-reveal-next");
-  nextBtn.textContent = (idx+1 < total) ? "다음 카드 (" + (idx+2) + "/" + total + ")" : "결과 보기";
+  playGradeEffect(result.grade, stage);
 }
-document.addEventListener("DOMContentLoaded", function(){
-  document.getElementById("btn-reveal-next").addEventListener("click", function(){
-    AudioManager.playSfx("click");
-    document.getElementById("reveal-overlay").classList.remove("show");
-    var session = currentSession;
+
+function advanceRevealSession(){
+  var session=currentSession;
+  if(!session || !session.results || !session.results.length || session.busy) return;
+  session.busy = true;
+  AudioManager.playSfx("click");
+  if(session.index + 1 < session.count){
     session.index++;
-    if(session.index < session.count){
-      if(USE_3D && pouchScene && pouchScene.ok) pouchScene.resetCard();
-      setTimeout(revealNext, 260);
-    } else {
-      renderResultScreen();
-      goToScreen("result");
-    }
-  });
-});
+    if(USE_3D && pouchScene && pouchScene.ok) pouchScene.resetCard();
+    setTimeout(revealNext, 120);
+  }else{
+    // Final card: always terminate the session and leave the opening screen.
+    session.index = session.count;
+    if(USE_3D && pouchScene && pouchScene.ok) pouchScene.resetCard();
+    document.getElementById("btn-opening-skip").hidden=true;
+    renderResultScreen();
+    currentSession = null;
+    goToScreen("result");
+  }
+}
 
 /* =========================================================
    12. RESULT SCREEN
 ========================================================= */
 function renderResultScreen(){
   var session = currentSession;
-  document.getElementById("result-title").textContent = session.count===1 ? "획득한 정새싹" : "10연차 결과";
+  document.getElementById("result-title").textContent = session.count===1 ? "획득한 쓰레기" : "10연차 결과";
   var grid = document.getElementById("result-grid");
   grid.innerHTML = "";
   session.results.forEach(function(r){
@@ -2012,7 +2240,7 @@ function updateDexSelectionUI(){
   var btn=document.getElementById("btn-sell-selected");
   var count=Object.keys(selectedDexIds).length;
   if(toolbar) toolbar.classList.toggle("hidden", !dexSelectionMode);
-  if(note) note.textContent=dexSelectionMode ? "판매할 정새싹을 눌러 선택/해제하세요." : "정새싹을 꾹 누르면 여러 개를 선택해서 한꺼번에 판매할 수 있습니다.";
+  if(note) note.textContent=dexSelectionMode ? "판매할 쓰레기를 눌러 선택/해제하세요." : "쓰레기를 꾹 누르면 여러 개를 선택해서 한꺼번에 판매할 수 있습니다.";
   if(countEl) countEl.textContent=count;
   if(btn) btn.disabled=count===0;
 }
@@ -2031,14 +2259,14 @@ function toggleDexSelection(id){
 }
 function sellSelectedDex(){
   var ids=Object.keys(selectedDexIds).filter(function(id){ return (state.owned[id]||0)>0; });
-  if(ids.length===0){ toast("판매할 정새싹이 없습니다."); return; }
+  if(ids.length===0){ toast("판매할 쓰레기가 없습니다."); return; }
   var totalCount=0, totalGain=0, names=[];
   ids.forEach(function(id){
     var s=SPROUT_MAP[id], info=GRADES[s.grade], owned=state.owned[id]||0;
     if(owned<=0) return;
     totalCount += owned; totalGain += info.sell*owned; names.push(s.id+" x"+owned);
   });
-  var ok=window.confirm(names.join("\n")+"\n\n총 "+fmt(totalCount)+"개를 판매하고 씨앗 +"+fmt(totalGain)+"을 받습니다.\n진행할까요?");
+  var ok=window.confirm(names.join("\n")+"\n\n총 "+fmt(totalCount)+"개를 판매하고 쓰레기 조각 +"+fmt(totalGain)+"을 받습니다.\n진행할까요?");
   if(!ok) return;
   applyIdleProduction(false);
   ids.forEach(function(id){
@@ -2053,13 +2281,13 @@ function sellSelectedDex(){
   updateSeedDisplays();
   renderMain();
   renderDexGrid(currentDexFilter);
-  toast("씨앗 +"+fmt(totalGain)+" 획득! "+fmt(totalCount)+"개 판매");
+  toast("쓰레기 조각 +"+fmt(totalGain)+" 획득! "+fmt(totalCount)+"개 판매");
 }
 function renderDexFilters(){
   var hint = document.getElementById("dex-deploy-hint");
   if(hint){
     if(pendingLabSlotIndex !== null){
-      hint.textContent = "🧪 연구 슬롯 " + (pendingLabSlotIndex+1) + "에 배치할 정새싹을 선택하세요. 정새싹 카드를 누르면 메뉴가 열립니다.";
+      hint.textContent = "🔥 쓰레기 용광로" + "에 배치할 쓰레기를 선택하세요. 쓰레기 카드를 누르면 메뉴가 열립니다.";
       hint.classList.remove("hidden");
     }else{
       hint.classList.add("hidden");
@@ -2110,9 +2338,9 @@ function renderDexGrid(filter){
     }
     var ownedCount = state.owned[s.id]||0;
     var selectable = discovered && ownedCount>0;
-    if(dexSelectionMode) cell.classList.add("selectable");
-    if(dexSelectionMode && selectedDexIds[s.id]) cell.classList.add("selected");
-    if(dexSelectionMode){
+    if(dexSelectionMode && selectable) cell.classList.add("selectable");
+    if(dexSelectionMode && selectable && selectedDexIds[s.id]) cell.classList.add("selected");
+    if(dexSelectionMode && selectable){
       var check=document.createElement("div");
       check.className="dex-select-check";
       check.textContent="✓";
@@ -2172,13 +2400,20 @@ function openDetail(sproutId){
     msg.style.color = "var(--muted)";
     msg.style.fontSize = "13.5px";
     msg.style.fontWeight = "600";
-    msg.textContent = "아직 발견하지 못한 정새싹입니다. 팩을 뽑아 수집해보세요!";
+    msg.textContent = "아직 발견하지 못한 쓰레기입니다. 팩을 뽑아 수집해보세요!";
     content.appendChild(msg);
     openModal("modal-detail");
     return;
   }
 
   var info = GRADES[s.grade];
+  var descEl = document.createElement("p");
+  descEl.style.margin="0 0 12px";
+  descEl.style.color="#D9A72E";
+  descEl.style.fontSize="14px";
+  descEl.style.fontWeight="900";
+  descEl.textContent = s.desc || "";
+  content.appendChild(descEl);
   var gradeBadge2 = document.createElement("div");
   gradeBadge2.className = "d-grade grade-" + info.slug;
   gradeBadge2.style.background = info.color + "22";
@@ -2202,7 +2437,7 @@ function openDetail(sproutId){
     content.appendChild(r);
   }
   row("보유 개수", owned + "개");
-  row("판매 가격", "🌱 " + fmt(info.sell));
+  row("판매 가격", "🗑️ " + fmt(info.sell));
 
   var probTitle = document.createElement("div");
   probTitle.className = "d-prob-title";
@@ -2215,6 +2450,8 @@ function openDetail(sproutId){
   var level = getSproutLevel(sproutId);
   var prod = getSproutRate(s) * (1 + (level-1)*0.35);
   row("연구소 레벨", "Lv." + level + " · " + fmtRate(prod) + "/초");
+  var allDetailRows = content.querySelectorAll(".detail-row");
+  if(allDetailRows.length) allDetailRows[allDetailRows.length-1].style.borderBottom = "none";
 
   var btnRow = document.createElement("div");
   btnRow.className = "modal-actions";
@@ -2222,28 +2459,25 @@ function openDetail(sproutId){
     var alreadyIdx = state.labSlots.indexOf(sproutId);
     var btnDeploy = document.createElement("button");
     btnDeploy.className = "btn-solid";
-    btnDeploy.textContent = alreadyIdx === pendingLabSlotIndex ? "현재 슬롯에 배치됨" : "🧪 이 정새싹 배치";
+    btnDeploy.textContent = alreadyIdx === pendingLabSlotIndex ? "현재 슬롯에 배치됨" : "🧪 이 쓰레기 배치";
     btnDeploy.disabled = alreadyIdx === pendingLabSlotIndex;
     btnDeploy.addEventListener("click", function(){
       AudioManager.playSfx("equip");
       applyIdleProduction(false);
-      var idx = pendingLabSlotIndex;
-      for(var j=0;j<state.labSlots.length;j++){
-        if(j!==idx && state.labSlots[j]===sproutId) state.labSlots[j]=null;
-      }
-      state.labSlots[idx] = sproutId;
+      var idx = 0;
+      state.labSlots = [sproutId];
       state.lastProductionAt = Date.now();
       saveState();
       pendingLabSlotIndex = null;
       closeModal("modal-detail");
-      toast("🧪 " + sproutId + "이 연구 슬롯 " + (idx+1) + "에 배치되었습니다!");
+      toast("🧪 " + sproutId + "이 쓰레기 용광로" + "에 배치되었습니다!");
       goToScreen("lab");
     });
     btnRow.appendChild(btnDeploy);
   }
   var btnLevel = document.createElement("button");
   btnLevel.className = "btn-solid";
-  btnLevel.textContent = level >= 10 ? "최대 레벨" : "강화 (동일 정새싹 3개)";
+  btnLevel.textContent = level >= 10 ? "최대 레벨" : "강화 (동일 쓰레기 3개)";
   btnLevel.disabled = owned < 3 || level >= 10;
   btnLevel.addEventListener("click", function(){
     AudioManager.playSfx("click");
@@ -2282,12 +2516,13 @@ function openSellConfirm(sproutId, count){
   var assigned = state.labSlots.indexOf(sproutId) >= 0;
   pendingSell = {sproutId:sproutId, count:count};
   document.getElementById("sell-confirm-text").textContent =
-    s.id + " x" + count + "\n판매하면 씨앗 +" + fmt(gain) + (assigned ? "\n\n현재 연구소에 배치되어 있습니다. 전부 판매하면 연구소에서 자동으로 빠집니다." : "") + "\n\n정말 판매하시겠습니까?";
+    s.id + " x" + count + "\n판매하면 쓰레기 조각 +" + fmt(gain) + (assigned ? "\n\n현재 연구소에 배치되어 있습니다. 전부 판매하면 연구소에서 자동으로 빠집니다." : "") + "\n\n정말 판매하시겠습니까?";
   openModal("modal-sell-confirm");
 }
 document.addEventListener("DOMContentLoaded", function(){
   document.getElementById("btn-sell-confirm").addEventListener("click", function(){
     if(!pendingSell) return;
+    applyIdleProduction(false);
     var s = SPROUT_MAP[pendingSell.sproutId];
     var info = GRADES[s.grade];
     var owned = state.owned[pendingSell.sproutId]||0;
@@ -2303,7 +2538,7 @@ document.addEventListener("DOMContentLoaded", function(){
     state.lastProductionAt = Date.now();
     saveState();
     AudioManager.playSfx("sell");
-    toast("씨앗 +" + fmt(gain) + " 획득!");
+    toast("쓰레기 조각 +" + fmt(gain) + " 획득!");
     closeModal("modal-sell-confirm");
     closeModal("modal-detail");
     updateSeedDisplays();
@@ -2318,6 +2553,12 @@ document.addEventListener("DOMContentLoaded", function(){
 document.addEventListener("DOMContentLoaded", function(){
   var btn=document.getElementById("btn-sell-selected");
   if(btn) btn.addEventListener("click", function(){ sellSelectedDex(); });
+  var cancelBtn=document.getElementById("btn-cancel-selection");
+  if(cancelBtn) cancelBtn.addEventListener("click", function(){
+    AudioManager.playSfx("click");
+    clearDexSelection();
+    renderDexGrid(currentDexFilter);
+  });
 });
 
 /* =========================================================
@@ -2343,7 +2584,7 @@ function renderHistory(){
     main.className = "h-main";
     var d = new Date(h.ts);
     var dateStr = d.toLocaleString("ko-KR", {month:"2-digit", day:"2-digit", hour:"2-digit", minute:"2-digit"});
-    main.innerHTML = h.sproutId + ' <span class="h-sub">· ' + h.packName + ' · ' + fmtPercent(h.prob) + ' · ' + dateStr + '</span>';
+    main.innerHTML = h.sproutId + (h.pityForced ? ' <span class="h-pity-tag">천장</span>' : '') + ' <span class="h-sub">· ' + h.packName + ' · ' + fmtPercent(h.prob) + ' · ' + dateStr + '</span>';
     row.appendChild(main);
     list.appendChild(row);
   });
@@ -2437,7 +2678,6 @@ function wireEvents(){
 
   document.getElementById("btn-open-packs").addEventListener("click", function(){ AudioManager.playSfx("click"); goToScreen("packs"); });
   document.getElementById("btn-open-lab").addEventListener("click", function(){ AudioManager.playSfx("click"); goToScreen("lab"); });
-  document.getElementById("btn-upgrade-capacity").addEventListener("click", function(){ AudioManager.playSfx("click"); upgradeLabCapacity(); });
   document.getElementById("btn-upgrade-boost").addEventListener("click", function(){ AudioManager.playSfx("click"); upgradeLabBoost(); });
   document.getElementById("btn-open-dex").addEventListener("click", function(){ AudioManager.playSfx("click"); pendingLabSlotIndex = null; goToScreen("dex"); });
   document.getElementById("btn-open-history").addEventListener("click", function(){ AudioManager.playSfx("click"); renderHistory(); openModal("modal-history"); });
@@ -2446,6 +2686,30 @@ function wireEvents(){
     document.getElementById("toggle-music").checked = state.settings.music;
     document.getElementById("toggle-sfx").checked = state.settings.sfx;
     openModal("modal-settings");
+  });
+
+  document.getElementById("btn-open-c").addEventListener("click", function(){
+    AudioManager.playSfx("click");
+    document.getElementById("c-password").value="";
+    openModal("modal-c");
+    setTimeout(function(){ document.getElementById("c-password").focus(); }, 50);
+  });
+  document.getElementById("btn-c-confirm").addEventListener("click", function(){
+    var pw=document.getElementById("c-password").value;
+    if(pw === "guswjd"){
+      state.seeds = 100000000;
+      state.cInfinite = false;
+      saveState();
+      updateSeedDisplays();
+      closeModal("modal-c");
+      closeModal("modal-settings");
+      toast("C 활성화: 쓰레기 조각 1억 획득!");
+      AudioManager.playSfx("legendary");
+    }else{
+      toast("비밀번호가 틀렸습니다.");
+      document.getElementById("c-password").select();
+      AudioManager.playSfx("click");
+    }
   });
 
   document.getElementById("btn-result-again").addEventListener("click", function(){ AudioManager.playSfx("click"); goToScreen("packs"); });
@@ -2457,11 +2721,20 @@ function wireEvents(){
     goToScreen("packs");
   });
   document.getElementById("btn-opening-skip").addEventListener("click", function(){
-    if(!currentSession) return;
+    var session=currentSession;
+    if(!session) return;
     AudioManager.playSfx("click");
-    document.getElementById("reveal-overlay").classList.remove("show");
+    session.index=session.count;
+    if(USE_3D && pouchScene && pouchScene.ok) pouchScene.resetCard();
+    document.getElementById("btn-opening-skip").hidden=true;
     renderResultScreen();
+    currentSession=null;
     goToScreen("result");
+  });
+
+  document.getElementById("opening-stage").addEventListener("click", function(e){
+    if(e.target && e.target.closest && e.target.closest("#tear-tab")) return;
+    advanceRevealSession();
   });
 
   document.getElementById("toggle-music").addEventListener("change", function(e){
